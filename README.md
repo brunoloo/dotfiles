@@ -1,6 +1,6 @@
 # dotfiles
 
-🇬🇧 **English** · 🇺🇾 [Español](README.es.md)
+🇺🇸 **English** · 🇺🇾 [Español](README.es.md)
 
 My Linux setup (Debian + KDE Plasma): terminal, shell, tmux, Neovim, git and a desktop layout that opens with one key. One command installs all of it.
 

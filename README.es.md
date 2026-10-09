@@ -1,6 +1,6 @@
 # dotfiles
 
-🇬🇧 [English](README.md) · 🇺🇾 **Español**
+🇺🇸 [English](README.md) · 🇺🇾 **Español**
 
 Mi entorno de trabajo en Linux (Debian + KDE Plasma): terminal, shell, tmux, Neovim, atajos y un layout de escritorio que se arma con una tecla. Todo se instala con un solo comando.
 
