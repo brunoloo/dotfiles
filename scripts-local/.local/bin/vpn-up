@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+# vpn-up — connect ProtonVPN to a target country, timeout-capped, with cleanup-on-failure.
+#
+# Usage: vpn-up [COUNTRY]   (default: US)
+#
+# The connect call is wrapped in `timeout 35`. On timeout (exit 124) this is
+# treated as a HARD failure (the routing table may be in an inconsistent state
+# with leftover kill-switch dummy interfaces); cleanup is run and the caller is
+# expected to retry with a different country.
+#
+# Exit codes:
+#   0   — connected (or already connected)
+#   1   — connect failed
+#   124 — timeout (caller should retry another country)
+
+set -u
+set -o pipefail
+
+COUNTRY="${1:-US}"
+
+# Idempotency pre-check: if vpn-status reports already-connected to the requested
+# country, exit 0 without calling `protonvpn connect`. The sibling vpn-status
+# script is itself timeout-bounded (timeout 35 internally), so this adds no new
+# unbounded wait. We additionally cap it here with `timeout 40` as a belt-and-
+# suspenders bound in case vpn-status ever loses its internal cap.
+STATUS=$(timeout 40 "$(dirname "$0")/vpn-status" 2>/dev/null || true)
+
+case "$STATUS" in
+  connected:"$COUNTRY")
+    echo "already connected to $COUNTRY" >&2
+    echo "connected:${COUNTRY}"
+    exit 0
+    ;;
+  connected:*)
+    # Connected to a different country — fall through; protonvpn CLI handles the switch.
+    echo "currently ${STATUS}; switching to ${COUNTRY}" >&2
+    ;;
+  *)
+    # disconnected, unknown, or unparseable — fall through to connect.
+    ;;
+esac
+
+# Single-line status emit at end. Keep stdout machine-parseable; chatter goes to stderr.
+timeout 35 protonvpn connect --country "$COUNTRY" >&2
+RC=$?
+
+if [[ $RC -eq 0 ]]; then
+  echo "connected:${COUNTRY}"
+  exit 0
+fi
+
+# Failure path: run cleanup to clear any half-installed kill-switch state, then
+# surface the original failure code (special-casing 124 so callers can rotate).
+vpn-cleanup >&2 || true
+
+if [[ $RC -eq 124 ]]; then
+  echo "timeout:${COUNTRY}"
+  exit 124
+fi
+
+echo "failed:${COUNTRY}"
+exit 1

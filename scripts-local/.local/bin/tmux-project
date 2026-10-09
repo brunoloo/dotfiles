@@ -1,0 +1,96 @@
+#!/usr/bin/env bash
+# Tmux project session automation
+# Auto-creates tmux sessions for project directories with configured layout
+
+set -euo pipefail
+
+# Default project directories to search
+PROJECT_DIRS=(
+  "$HOME/prj"
+)
+
+# Find all project directories (max depth 2)
+find_projects() {
+  for dir in "${PROJECT_DIRS[@]}"; do
+    if [ -d "$dir" ]; then
+      find "$dir" -maxdepth 2 -type d -name ".git" -exec dirname {} \; 2>/dev/null
+    fi
+  done | sort -u
+}
+
+# Create session name from project path
+session_name_from_path() {
+  basename "$1" | tr '.' '_'
+}
+
+# Create project sessions (2 separate sessions)
+create_project_sessions() {
+  local project_path="$1"
+  local base_name="$2"
+
+  local editor_session="${base_name}-editor"
+  local terminal_session="${base_name}-bash"
+
+  if tmux has-session -t "$editor_session" 2>/dev/null; then
+    echo "Sessions for '$base_name' already exist"
+    return 1
+  fi
+
+  # Session 1: Editor (nvim)
+  tmux new-session -d -s "$editor_session" -c "$project_path"
+  tmux rename-window -t "$editor_session:1" "editor"
+  tmux send-keys -t "$editor_session:1" "nvim" C-m
+
+  # Session 2: Terminal (bash)
+  tmux new-session -d -s "$terminal_session" -c "$project_path"
+  tmux rename-window -t "$terminal_session:1" "bash"
+
+  echo "Created sessions: $editor_session, $terminal_session"
+}
+
+# Main logic
+main() {
+  if ! command -v tmux &>/dev/null; then
+    echo "Error: tmux is not installed" >&2
+    exit 1
+  fi
+
+  if [ $# -eq 0 ]; then
+    projects=$(find_projects)
+
+    if [ -z "$projects" ]; then
+      echo "No projects found in: ${PROJECT_DIRS[*]}"
+      exit 1
+    fi
+
+    echo "Select a project:"
+    mapfile -t project_list <<< "$projects"
+    select selected in "${project_list[@]}"; do
+      [ -n "$selected" ] && break
+    done
+
+    if [ -z "${selected:-}" ]; then
+      exit 0
+    fi
+  else
+    selected="$1"
+
+    if [ ! -d "$selected" ]; then
+      echo "Error: Directory not found: $selected"
+      exit 1
+    fi
+  fi
+
+  base_name=$(session_name_from_path "$selected")
+  editor_session="${base_name}-editor"
+
+  create_project_sessions "$selected" "$base_name" || true
+
+  if [ -n "${TMUX:-}" ]; then
+    tmux switch-client -t "$editor_session"
+  else
+    tmux attach-session -t "$editor_session"
+  fi
+}
+
+main "$@"

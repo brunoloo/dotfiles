@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# vpn-down — disconnect ProtonVPN and always clean up orphaned NM state.
+#
+# Wraps `protonvpn disconnect` in `timeout 35`. The CLI prints "Disconnected."
+# before its async task barrier, so a timeout here (exit 124) is a soft success:
+# the state change has typically happened, just the cleanup hung. We always run
+# vpn-cleanup afterward to guarantee no orphaned pvpn-* NM connections remain.
+#
+# Exit codes:
+#   0 — disconnected (or already disconnected)
+#   1 — disconnect failed in a non-timeout way
+
+set -u
+set -o pipefail
+
+timeout 35 protonvpn disconnect >&2
+RC=$?
+
+# Always run cleanup — this is the whole point of the wrapper.
+vpn-cleanup >&2 || true
+
+if [[ $RC -eq 0 || $RC -eq 124 ]]; then
+  echo "disconnected"
+  exit 0
+fi
+
+# Real failure path. Cleanup has already run; verify final state.
+if vpn-status 2>/dev/null | grep -q '^disconnected$'; then
+  echo "disconnected"
+  exit 0
+fi
+
+echo "failed"
+exit 1

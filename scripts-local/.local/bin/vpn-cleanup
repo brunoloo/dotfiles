@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+# vpn-cleanup — idempotent teardown of orphaned ProtonVPN kill-switch state AND
+# best-effort restoration of DNS/routing so the box stays reachable after a flip.
+#
+# ProtonVPN CLI 1.0.1's NM kill switch creates a dummy interface (pvpnksintrf0)
+# with a metric-98 default route plus pvpn-killswitch* / wireguard NM connections.
+# If the CLI is interrupted (timeout, async race, signal, keyring failure) these
+# are orphaned: the dummy hijacks the default route and DNS is left pointing at
+# Proton's resolver, which is unreachable once the tunnel is gone. Result: total
+# loss of connectivity (ENOENT on every lookup, blackholed routes) until reboot.
+# This tears all of it down and verifies the box can resolve + reach the internet.
+#
+# nmcli deletes run via polkit (no sudo). The raw `ip link delete` and DNS rewrite
+# only take effect with root; when DNS is pinned immutable (recommended, see
+# vpn-dns-pin.sh) the DNS step is a harmless no-op. Exit code: always 0.
+
+set -u
+set -o pipefail
+
+# 1. Delete known + dynamically-discovered Proton/kill-switch/wireguard NM conns.
+STATIC=(
+  pvpn-killswitch
+  pvpn-killswitch-perm
+  pvpn-routed-killswitch
+  pvpn-routed-killswitch-perm
+  pvpn-killswitch-ipv6
+  pvpn-ipv6leak-protection
+)
+mapfile -t DYN < <(nmcli -t -f NAME,TYPE connection show 2>/dev/null \
+  | awk -F: 'tolower($1) ~ /pvpn|proton|killswitch/ || $2=="wireguard" {print $1}')
+
+declare -A seen=()
+for conn in "${STATIC[@]}" "${DYN[@]}"; do
+  [[ -z "$conn" || -n "${seen[$conn]:-}" ]] && continue
+  seen[$conn]=1
+  if nmcli connection delete "$conn" 2>/dev/null; then
+    echo "cleaned $conn"
+  else
+    echo "absent  $conn"
+  fi
+done
+
+# 2. Remove any leftover proton dummy interface not owned by an NM connection.
+#    (Needs root; silent no-op otherwise. Narrowly scoped to pvpn* names.)
+for ifc in $(ip -o link show 2>/dev/null | awk -F': ' '{print $2}' | grep -iE '^pvpn' || true); do
+  ip link delete "$ifc" 2>/dev/null && echo "removed iface $ifc" || true
+done
+
+# 3. DNS heal: if resolv.conf is writable and broken (empty, or a Proton 10.x
+#    resolver), restore public DNS. No-op when pinned immutable / not writable.
+if [ -w /etc/resolv.conf ]; then
+  if ! grep -qE '^[[:space:]]*nameserver[[:space:]]+(1\.1\.1\.1|8\.8\.8\.8|9\.9\.9\.9|192\.168\.)' /etc/resolv.conf 2>/dev/null; then
+    if printf 'nameserver 1.1.1.1\nnameserver 8.8.8.8\n' > /etc/resolv.conf 2>/dev/null; then
+      echo "restored DNS -> 1.1.1.1/8.8.8.8"
+    fi
+  fi
+fi
+
+# 4. Verify connectivity (never fail the script).
+if getent hosts api.anthropic.com >/dev/null 2>&1; then
+  echo "dns OK"
+else
+  echo "dns STILL BROKEN — /etc/resolv.conf may need repair (see vpn-dns-pin.sh)" >&2
+fi
+
+echo "vpn-cleanup: done"
+exit 0

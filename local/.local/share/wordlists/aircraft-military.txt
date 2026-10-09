@@ -1,0 +1,672 @@
+Aero L-159A ALCA
+Aero L-159B ALCA
+Aero L-39C Albatros
+Aero L-39MS
+Aero L-39NG
+Aero L-39V Albatros
+Aero L-39ZA Albatros
+Aero L-39ZO Albatros
+Aero L-59 Super Albatros
+AgustaWestland WAH-64 Apache
+AIDC F-CK-1A Ching-kuo
+AIDC F-CK-1B Ching-kuo
+AIDC F-CK-1C Hsiang Sheng
+AIDC F-CK-1D Hsiang Sheng
+Alenia Aermacchi M-346
+Alenia Aermacchi M-346FA Fighter Attack
+Alenia Aermacchi M-346FGA Fighter Ground Attack
+Alenia Aermacchi M-346FT Fighter Trainer
+Alenia C-27J Spartan
+BAE Hawk 100
+BAE Hawk 102
+BAE Hawk 103
+BAE Hawk 108
+BAE Hawk 109
+BAE Hawk 115
+BAE Hawk 127
+BAE Hawk 128
+BAE Hawk 129
+BAE Hawk 132
+BAE Hawk 165
+BAE Hawk 200
+BAE Hawk 203
+BAE Hawk 205
+BAE Hawk 208
+BAE Hawk 209
+BAE Hawk 50
+BAE Hawk 51
+BAE Hawk 52
+BAE Hawk 53
+BAE Hawk 60
+BAE Hawk 61
+BAE Hawk 63
+BAE Hawk 63A
+BAE Hawk 64
+BAE Hawk 65
+BAE Hawk 65A
+BAE Hawk 66
+BAE Hawk 67
+BAE Hawk T1
+BAE Hawk T1A
+BAE Hawk T2
+BAE Hawk T-45 Goshawk
+Beechcraft AT-6B Wolverine
+Beechcraft AT-6E Wolverine
+Beechcraft CT-156 Harvard II
+Beechcraft T-6A Texan II
+Beechcraft T-6B Texan II
+Beechcraft T-6C Texan II
+Beechcraft T-6D Texan II
+Beriev A-100
+Beriev A-50
+Beriev A-50U
+Boeing ACH-47A Chinook
+Boeing AH-64A Apache
+Boeing AH-64D Apache Longbow
+Boeing AH-64E Apache Guardian
+Boeing B-52A Stratofortress
+Boeing B-52B Stratofortress
+Boeing B-52C Stratofortress
+Boeing B-52D Stratofortress
+Boeing B-52E Stratofortress
+Boeing B-52F Stratofortress
+Boeing B-52G Stratofortress
+Boeing B-52H Stratofortress
+Boeing CH-47A Chinook
+Boeing CH-47B Chinook
+Boeing CH-47C Chinook
+Boeing CH-47D Chinook
+Boeing CH-47F Chinook
+Boeing CH-47J Chinook
+Boeing E-3A Sentry
+Boeing E-3B Sentry
+Boeing E-3C Sentry
+Boeing E-3D Sentry
+Boeing E-3F Sentry
+Boeing E-3G Sentry
+Boeing EA-18G Growler
+Boeing F-15EX Eagle II
+Boeing F/A-18E Super Hornet
+Boeing F/A-18F Super Hornet
+Boeing KC-135A Stratotanker
+Boeing KC-135B
+Boeing KC-135D
+Boeing KC-135E Stratotanker
+Boeing KC-135Q Stratotanker
+Boeing KC-135R Stratotanker
+Boeing KC-135T Stratotanker
+Boeing KC-46A Pegasus
+Boeing KE-3A
+Boeing MH-47D Chinook
+Boeing MH-47E Chinook
+Boeing MH-47G Chinook
+Boeing P-8A Poseidon
+Boeing P-8I Neptune
+Boeing Poseidon MRA1
+British Aerospace Harrier GR5
+British Aerospace Harrier GR7
+British Aerospace Harrier GR9
+British Aerospace Harrier T10
+Chengdu J-10A
+Chengdu J-10B
+Chengdu J-10C
+Chengdu J-10CE
+Chengdu J-10S
+Chengdu J-20
+Chengdu J-20A
+Chengdu J-20S
+Convair B-36A Peacemaker
+Convair B-36B Peacemaker
+Convair B-36D Peacemaker
+Convair B-36F Peacemaker
+Convair B-36H Peacemaker
+Convair B-36J Peacemaker
+Convair B-58A Hustler
+Convair NB-36H
+Convair NB-58A Hustler
+Convair RB-36D
+Convair RB-36F
+Convair RB-36H
+Convair RB-58A Hustler
+Convair TB-58A Hustler
+Dassault Mirage 2000-5F
+Dassault Mirage 2000-5Mk2
+Dassault Mirage 2000-9
+Dassault Mirage 2000B
+Dassault Mirage 2000C
+Dassault Mirage 2000D
+Dassault Mirage 2000D RMV
+Dassault Mirage 2000E
+Dassault Mirage 2000H
+Dassault Mirage 2000N
+Dassault Mirage 2000P
+Dassault Mirage 5
+Dassault Mirage 50
+Dassault Mirage F1A
+Dassault Mirage F1B
+Dassault Mirage F1C
+Dassault Mirage F1C-200
+Dassault Mirage F1CR
+Dassault Mirage F1CT
+Dassault Mirage F1D
+Dassault Mirage F1E
+Dassault Mirage F1EE
+Dassault Mirage F1EH
+Dassault Mirage F1EJ
+Dassault Mirage F1M
+Dassault Mirage IIIA
+Dassault Mirage IIIB
+Dassault Mirage IIIC
+Dassault Mirage IIICJ
+Dassault Mirage IIICZ
+Dassault Mirage IIID
+Dassault Mirage IIIE
+Dassault Mirage IIIEA
+Dassault Mirage IIIEP
+Dassault Mirage IIING
+Dassault Mirage IIIO
+Dassault Mirage IIIR
+Dassault Mirage IIIRD
+Dassault Mirage IIIS
+Dassault Rafale B
+Dassault Rafale C
+Dassault Rafale F1
+Dassault Rafale F2
+Dassault Rafale F3
+Dassault Rafale F3R
+Dassault Rafale F4
+Dassault Rafale F5
+Dassault Rafale M
+Embraer A-29A Super Tucano
+Embraer A-29B Super Tucano
+Embraer A-29C Super Tucano
+Embraer A-29M Super Tucano
+Embraer A-29N Super Tucano
+Embraer ALX Super Tucano
+Eurofighter Typhoon ECR
+Eurofighter Typhoon EK
+Eurofighter Typhoon F2
+Eurofighter Typhoon FGR4
+Eurofighter Typhoon Tranche 1
+Eurofighter Typhoon Tranche 2
+Eurofighter Typhoon Tranche 3A
+Eurofighter Typhoon Tranche 3B
+Eurofighter Typhoon Tranche 4
+Fairchild Republic A-10A Thunderbolt II
+Fairchild Republic A-10C Thunderbolt II
+Fairchild Republic OA-10A Thunderbolt II
+General Dynamics EF-111A Raven
+General Dynamics F-111A
+General Dynamics F-111B
+General Dynamics F-111C
+General Dynamics F-111D
+General Dynamics F-111E
+General Dynamics F-111F
+General Dynamics F-111G
+General Dynamics F-111K
+General Dynamics F-16A
+General Dynamics F-16A Block 1
+General Dynamics F-16A Block 10
+General Dynamics F-16A Block 15
+General Dynamics F-16A Block 15 ADF
+General Dynamics F-16A Block 15 OCU
+General Dynamics F-16A Block 20
+General Dynamics F-16A Block 5
+General Dynamics F-16AM (MLU)
+General Dynamics F-16B
+General Dynamics F-16BM (MLU)
+General Dynamics F-16C
+General Dynamics F-16C Block 25
+General Dynamics F-16C Block 30
+General Dynamics F-16C Block 32
+General Dynamics F-16C Block 40
+General Dynamics F-16C Block 42
+General Dynamics F-16C Block 50
+General Dynamics F-16C Block 50/52+
+General Dynamics F-16C Block 52
+General Dynamics F-16CJ
+General Dynamics F-16D
+General Dynamics F-16DJ
+General Dynamics F-16E Block 60
+General Dynamics F-16F Block 60
+General Dynamics F-16I Sufa
+General Dynamics F-16N
+General Dynamics F-16V Block 70
+General Dynamics F-16V Block 72
+General Dynamics FB-111A
+Grumman A-6A Intruder
+Grumman A-6B Intruder
+Grumman A-6C Intruder
+Grumman A-6E Intruder
+Grumman E-2A Hawkeye
+Grumman E-2B Hawkeye
+Grumman E-2C Hawkeye 2000
+Grumman E-2C Hawkeye Group 0
+Grumman E-2C Hawkeye Group I
+Grumman E-2C Hawkeye Group II
+Grumman E-2T
+Grumman EA-6A Intruder
+Grumman EA-6B Prowler
+Grumman F-14A Tomcat
+Grumman F-14A+ Tomcat
+Grumman F-14B Tomcat
+Grumman F-14D Tomcat
+Grumman KA-6D Intruder
+HAL HF-24 Marut Mk.1
+HAL HF-24 Marut Mk.1A
+HAL HF-24 Marut Mk.1R
+HAL HF-24 Marut Mk.1T
+HAL Tejas Mk.1A
+HAL Tejas Mk.1 (FOC)
+HAL Tejas Mk.1 (IOC)
+HAL Tejas Mk.2
+HAL Tejas Naval LCA N-LCA
+Harbin H-5
+Harbin HJ-5
+Harbin HZ-5
+Hawker Siddeley Harrier GR1
+Hawker Siddeley Harrier GR3
+Hawker Siddeley Harrier T2
+Hawker Siddeley Harrier T4
+Ilyushin Il-2
+Ilyushin Il-28
+Ilyushin Il-28N
+Ilyushin Il-28R
+Ilyushin Il-28Sh
+Ilyushin Il-28T
+Ilyushin Il-28U
+Ilyushin Il-2M3
+Ilyushin Il-2T
+Ilyushin Il-2 two-seat
+Ilyushin Il-2U
+Ilyushin Il-76M
+Ilyushin Il-76MD
+Ilyushin Il-76MD-90A
+Ilyushin Il-76MF
+Ilyushin Il-78M
+Ilyushin Il-78MD-90A
+Ilyushin Il-78 (tanker)
+KAI FA-50 Block 10
+KAI FA-50 Block 20
+KAI FA-50 Fighting Eagle
+KAI FA-50GF
+KAI FA-50M
+KAI FA-50PH
+KAI FA-50PL
+KAI KF-21 Boramae Block I
+KAI KF-21 Boramae Block II
+KAI KF-21EX Block III
+KAI T-50B Golden Eagle
+KAI T-50 Golden Eagle
+KAI T-50i
+KAI T-50IQ
+KAI TA-50 Golden Eagle
+Kawasaki C-2
+Kawasaki P-1
+Leonardo T-346A
+Lockheed A-12
+Lockheed AC-130A
+Lockheed AC-130E Spectre
+Lockheed AC-130H Spectre
+Lockheed AC-130J Ghostrider
+Lockheed AC-130U Spooky
+Lockheed AC-130W Stinger II
+Lockheed C-130A Hercules
+Lockheed C-130B Hercules
+Lockheed C-130E Hercules
+Lockheed C-130H Hercules
+Lockheed C-130J-30 Super Hercules
+Lockheed C-130J Super Hercules
+Lockheed C-130K Hercules
+Lockheed C-130T Hercules
+Lockheed C-5A Galaxy
+Lockheed C-5B Galaxy
+Lockheed C-5C Galaxy
+Lockheed C-5M Super Galaxy
+Lockheed CP-140A Arcturus
+Lockheed CP-140 Aurora
+Lockheed DC-130 Hercules
+Lockheed EC-130
+Lockheed EC-130H Compass Call
+Lockheed EC-130J Commando Solo
+Lockheed EP-3E Aries II
+Lockheed F-117A Nighthawk
+Lockheed HC-130
+Lockheed HC-130J Combat King II
+Lockheed KC-130 Hercules
+Lockheed LC-130 Hercules
+Lockheed M-21
+Lockheed Martin F-22A Raptor
+Lockheed Martin F-22B (cancelled)
+Lockheed Martin F-35A
+Lockheed Martin F-35B
+Lockheed Martin F-35C
+Lockheed Martin F-35I Adir
+Lockheed Martin YF-22
+Lockheed MC-130E Combat Talon I
+Lockheed MC-130H Combat Talon II
+Lockheed MC-130J Commando II
+Lockheed P-3A Orion
+Lockheed P-3B Orion
+Lockheed P-3C Orion
+Lockheed SR-71A Blackbird
+Lockheed SR-71B Blackbird
+Lockheed SR-71C Blackbird
+Lockheed WC-130 Hercules
+Lockheed WP-3D Orion
+Lockheed YF-117A
+Lockheed YF-12
+LTV A-7A Corsair II
+LTV A-7B Corsair II
+LTV A-7C Corsair II
+LTV A-7D Corsair II
+LTV A-7E Corsair II
+LTV A-7H Corsair II
+LTV A-7K Corsair II
+LTV A-7P Corsair II
+LTV EA-7L Corsair II
+LTV TA-7C Corsair II
+McDonnell Douglas AV-8A
+McDonnell Douglas AV-8B Harrier II
+McDonnell Douglas AV-8B+ Harrier II+
+McDonnell Douglas CF-18 Hornet
+McDonnell Douglas EF-18 Hornet
+McDonnell Douglas F-15 2040C
+McDonnell Douglas F-15A Eagle
+McDonnell Douglas F-15B Eagle
+McDonnell Douglas F-15C Eagle
+McDonnell Douglas F-15D Eagle
+McDonnell Douglas F-15DJ Eagle
+McDonnell Douglas F-15E Strike Eagle
+McDonnell Douglas F-15J Eagle
+McDonnell Douglas F-15N Sea Eagle
+McDonnell Douglas F-15SE Silent Eagle
+McDonnell Douglas F-4A Phantom II
+McDonnell Douglas F-4B Phantom II
+McDonnell Douglas F-4C Phantom II
+McDonnell Douglas F-4D Phantom II
+McDonnell Douglas F-4EJ Phantom II
+McDonnell Douglas F-4E Phantom II
+McDonnell Douglas F-4F Phantom II
+McDonnell Douglas F-4G Wild Weasel
+McDonnell Douglas F-4J Phantom II
+McDonnell Douglas F-4N Phantom II
+McDonnell Douglas F-4S Phantom II
+McDonnell Douglas F/A-18A Hornet
+McDonnell Douglas F/A-18A+ Hornet
+McDonnell Douglas F/A-18A++ Hornet
+McDonnell Douglas F/A-18B Hornet
+McDonnell Douglas F/A-18C Hornet
+McDonnell Douglas F/A-18D Hornet
+McDonnell Douglas QF-4
+McDonnell Douglas RF-4B Phantom II
+McDonnell Douglas RF-4C Phantom II
+McDonnell Douglas TAV-8B
+McDonnell Douglas TAV-8B Harrier II
+Mikoyan-Gurevich MiG-21bis
+Mikoyan-Gurevich MiG-21F
+Mikoyan-Gurevich MiG-21F-13
+Mikoyan-Gurevich MiG-21M
+Mikoyan-Gurevich MiG-21MF
+Mikoyan-Gurevich MiG-21MT
+Mikoyan-Gurevich MiG-21P
+Mikoyan-Gurevich MiG-21PF
+Mikoyan-Gurevich MiG-21PFL
+Mikoyan-Gurevich MiG-21PFM
+Mikoyan-Gurevich MiG-21R
+Mikoyan-Gurevich MiG-21S
+Mikoyan-Gurevich MiG-21SM
+Mikoyan-Gurevich MiG-21SMT
+Mikoyan-Gurevich MiG-21U
+Mikoyan-Gurevich MiG-21UM
+Mikoyan-Gurevich MiG-21US
+Mikoyan-Gurevich MiG-23BN
+Mikoyan-Gurevich MiG-23M
+Mikoyan-Gurevich MiG-23MF
+Mikoyan-Gurevich MiG-23ML
+Mikoyan-Gurevich MiG-23MLA
+Mikoyan-Gurevich MiG-23MLD
+Mikoyan-Gurevich MiG-23MS
+Mikoyan-Gurevich MiG-23P
+Mikoyan-Gurevich MiG-23S
+Mikoyan-Gurevich MiG-23UB
+Mikoyan-Gurevich MiG-25BM
+Mikoyan-Gurevich MiG-25P
+Mikoyan-Gurevich MiG-25PD
+Mikoyan-Gurevich MiG-25PDS
+Mikoyan-Gurevich MiG-25PU
+Mikoyan-Gurevich MiG-25R
+Mikoyan-Gurevich MiG-25RB
+Mikoyan-Gurevich MiG-25RBF
+Mikoyan-Gurevich MiG-25RBK
+Mikoyan-Gurevich MiG-25RBN
+Mikoyan-Gurevich MiG-25RBS
+Mikoyan-Gurevich MiG-25RBT
+Mikoyan-Gurevich MiG-25RBV
+Mikoyan-Gurevich MiG-25RR
+Mikoyan-Gurevich MiG-25RU
+Mikoyan-Gurevich MiG-27
+Mikoyan-Gurevich MiG-27D
+Mikoyan-Gurevich MiG-27K
+Mikoyan-Gurevich MiG-27M
+Mikoyan MiG-29
+Mikoyan MiG-29A
+Mikoyan MiG-29K
+Mikoyan MiG-29KUB
+Mikoyan MiG-29M
+Mikoyan MiG-29MU1
+Mikoyan MiG-29MU2
+Mikoyan MiG-29S
+Mikoyan MiG-29SMT
+Mikoyan MiG-29UB
+Mikoyan MiG-29UPG
+Mikoyan MiG-31
+Mikoyan MiG-31B
+Mikoyan MiG-31BM
+Mikoyan MiG-31BS
+Mikoyan MiG-31BSM
+Mikoyan MiG-31D
+Mikoyan MiG-31E
+Mikoyan MiG-31K
+Mikoyan MiG-31M
+Mikoyan MiG-35
+Mikoyan MiG-35D
+Mitsubishi F-2A
+Mitsubishi F-2B
+Mitsubishi X-2 Shinshin
+Northrop F-20 Tigershark
+Northrop F-5A Freedom Fighter
+Northrop F-5B Freedom Fighter
+Northrop F-5C
+Northrop F-5E Tiger II
+Northrop F-5F Tiger II
+Northrop Grumman B-21 Raider
+Northrop Grumman B-2A Spirit
+Northrop Grumman E-2D Advanced Hawkeye
+Northrop Grumman E-8A Joint STARS
+Northrop Grumman E-8C Joint STARS
+Northrop Grumman EQ-4B
+Northrop Grumman MQ-4C Triton
+Northrop Grumman RQ-4A Global Hawk
+Northrop Grumman RQ-4B Global Hawk Block 20
+Northrop Grumman RQ-4B Global Hawk Block 30
+Northrop Grumman RQ-4B Global Hawk Block 40
+Northrop Grumman RQ-4D Phoenix
+Northrop RF-5A
+Northrop RF-5E Tigereye
+Northrop T-38 Talon
+Panavia Tornado ADV
+Panavia Tornado ECR
+Panavia Tornado F2
+Panavia Tornado F3
+Panavia Tornado GR1
+Panavia Tornado GR4
+Panavia Tornado IDS
+Pilatus PC-21
+Republic EF-105F Thunderchief
+Republic F-105B Thunderchief
+Republic F-105D Thunderchief
+Republic F-105F Thunderchief
+Republic F-105G Thunderchief
+Republic F-84B Thunderjet
+Republic F-84C Thunderjet
+Republic F-84D Thunderjet
+Republic F-84E Thunderjet
+Republic F-84F Thunderstreak
+Republic F-84G Thunderjet
+Republic RF-84F Thunderflash
+Republic XF-84H Thunderscreech
+Saab 35Ö Draken
+Saab 35XD Draken
+Saab 35XS Draken
+Saab AJ 37 Viggen
+Saab J 35A Draken
+Saab J 35B Draken
+Saab J 35D Draken
+Saab J 35F Draken
+Saab J 35J Draken
+Saab JA 37C Viggen
+Saab JA 37D Viggen
+Saab JA 37 Viggen
+Saab JAS 39A Gripen
+Saab JAS 39B Gripen
+Saab JAS 39C Gripen
+Saab JAS 39D Gripen
+Saab JAS 39E Gripen
+Saab JAS 39F Gripen
+Saab S 35E Draken
+Saab SF 37 Viggen
+Saab SH 37 Viggen
+Saab SK 35C Draken
+Saab SK 37E Viggen
+Saab SK 37 Viggen
+Shenyang FC-31 Gyrfalcon
+Shenyang J-11
+Shenyang J-11A
+Shenyang J-11B
+Shenyang J-11BG
+Shenyang J-11BS
+Shenyang J-15
+Shenyang J-15DH
+Shenyang J-15DT
+Shenyang J-15S
+Shenyang J-15T
+Shenyang J-16
+Shenyang J-16D
+Shenyang J-31
+Sukhoi Su-17
+Sukhoi Su-17M
+Sukhoi Su-17M2
+Sukhoi Su-17M3
+Sukhoi Su-17M4
+Sukhoi Su-17UM
+Sukhoi Su-17UM3
+Sukhoi Su-20
+Sukhoi Su-22
+Sukhoi Su-22M
+Sukhoi Su-22M3
+Sukhoi Su-22M4
+Sukhoi Su-24
+Sukhoi Su-24M
+Sukhoi Su-24M2
+Sukhoi Su-24MK
+Sukhoi Su-24MP
+Sukhoi Su-24MR
+Sukhoi Su-25
+Sukhoi Su-25BM
+Sukhoi Su-25K
+Sukhoi Su-25KM
+Sukhoi Su-25SM
+Sukhoi Su-25SM3
+Sukhoi Su-25T
+Sukhoi Su-25TM (Su-39)
+Sukhoi Su-25UB
+Sukhoi Su-25UBK
+Sukhoi Su-25UBM
+Sukhoi Su-25UTG
+Sukhoi Su-27
+Sukhoi Su-27P
+Sukhoi Su-27SK
+Sukhoi Su-27SM
+Sukhoi Su-27SM3
+Sukhoi Su-27UB
+Sukhoi Su-28
+Sukhoi Su-30
+Sukhoi Su-30K
+Sukhoi Su-30M2
+Sukhoi Su-30MK
+Sukhoi Su-30MK2
+Sukhoi Su-30MK2V
+Sukhoi Su-30MKA
+Sukhoi Su-30MKI
+Sukhoi Su-30MKK
+Sukhoi Su-30MKM
+Sukhoi Su-30SM
+Sukhoi Su-30SM2
+Sukhoi Su-30SME
+Sukhoi Su-33
+Sukhoi Su-34
+Sukhoi Su-35
+Sukhoi Su-35S
+Sukhoi Su-37
+Sukhoi Su-57
+Sukhoi Su-57E
+Sukhoi Su-57M
+Sukhoi Su-75 Checkmate
+Sukhoi Su-7B
+Sukhoi Su-7BKL
+Sukhoi Su-7BM
+Sukhoi Su-7U
+Tupolev Tu-142
+Tupolev Tu-160
+Tupolev Tu-160M
+Tupolev Tu-160M2
+Tupolev Tu-160S
+Tupolev Tu-160SK
+Tupolev Tu-22
+Tupolev Tu-22K
+Tupolev Tu-22M0
+Tupolev Tu-22M1 Backfire-A
+Tupolev Tu-22M2 Backfire-B
+Tupolev Tu-22M3 Backfire-C
+Tupolev Tu-22M3M
+Tupolev Tu-22M4
+Tupolev Tu-22MR
+Tupolev Tu-22P
+Tupolev Tu-22R
+Tupolev Tu-22U
+Tupolev Tu-95
+Tupolev Tu-95K
+Tupolev Tu-95K22
+Tupolev Tu-95KD
+Tupolev Tu-95KM
+Tupolev Tu-95LAL
+Tupolev Tu-95M
+Tupolev Tu-95MR
+Tupolev Tu-95MS
+Tupolev Tu-95MS16
+Tupolev Tu-95MS6
+Tupolev Tu-95MSM
+Tupolev Tu-95RTs
+Tupolev Tu-95U
+Tupolev Tu-95V
+Vought F-8A Crusader
+Vought F-8B Crusader
+Vought F-8C Crusader
+Vought F-8D Crusader
+Vought F-8E Crusader
+Vought F-8E(FN) Crusader
+Vought F-8H Crusader
+Vought F-8J Crusader
+Vought F-8K Crusader
+Vought F-8L Crusader
+Vought F-8P Crusader
+Vought RF-8A Crusader
+Vought RF-8G Crusader
+Yakovlev Yak-130
+Yakovlev Yak-130M
+Yakovlev Yak-131
+Yakovlev Yak-141
+Yakovlev Yak-38
+Yakovlev Yak-38M
+Yakovlev Yak-38U

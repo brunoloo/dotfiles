@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+# vpn-status — read-only ProtonVPN status, timeout-capped.
+#
+# Wraps `protonvpn status` with a 35s timeout. The CLI sometimes hangs on the
+# async task barrier after printing output; the timeout caps that wait. Exit
+# code 124 (timeout) is treated as soft success — the underlying state query
+# has typically already completed by the time we print "unknown".
+#
+# Output: single line.
+#   connected:<COUNTRY>   — VPN is up; <COUNTRY> is the 2-letter code parsed from status
+#   disconnected          — VPN is down
+#   unknown               — CLI hung past timeout (treat as soft-success)
+# Exit codes:
+#   0 — status determined (or soft-success unknown)
+#   1 — hard failure (CLI errored before timeout)
+
+set -u
+set -o pipefail
+
+OUTPUT=$(timeout 35 protonvpn status 2>&1)
+RC=$?
+
+if [[ $RC -eq 124 ]]; then
+  echo "unknown"
+  exit 0
+fi
+
+if [[ $RC -ne 0 ]]; then
+  # Some CLI builds exit non-zero when disconnected. Detect that case from output.
+  if grep -qiE 'disconnected|no active' <<<"$OUTPUT"; then
+    echo "disconnected"
+    exit 0
+  fi
+  echo "unknown" >&2
+  echo "$OUTPUT" >&2
+  exit 1
+fi
+
+# Parse for a connected indication. ProtonVPN CLI 1.0.1 prints lines like:
+#   Country: United States
+#   Server:  US-NY#42
+# Prefer the 2-letter code from the Server line; fall back to disconnected.
+if grep -qiE 'disconnected|no active' <<<"$OUTPUT"; then
+  echo "disconnected"
+  exit 0
+fi
+
+COUNTRY=$(grep -iE '^[[:space:]]*Server' <<<"$OUTPUT" | head -1 | grep -oE '[A-Z]{2}' | head -1 || true)
+
+if [[ -z "$COUNTRY" ]]; then
+  COUNTRY=$(grep -iE '^[[:space:]]*Country' <<<"$OUTPUT" | head -1 | sed -E 's/.*:[[:space:]]*//' | head -1 || true)
+fi
+
+if [[ -n "$COUNTRY" ]]; then
+  echo "connected:${COUNTRY}"
+  exit 0
+fi
+
+# Couldn't parse but CLI returned 0 — surface raw output to stderr for debugging.
+echo "unknown" >&2
+echo "$OUTPUT" >&2
+exit 1

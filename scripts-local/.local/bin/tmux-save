@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+# Save current tmux session layouts and windows to a file
+
+set -euo pipefail
+
+SAVE_DIR="$HOME/.config/tmux/saved-sessions"
+TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+
+# Ensure save directory exists
+mkdir -p "$SAVE_DIR"
+
+# Main logic
+main() {
+    # Check if tmux is running
+    if ! tmux list-sessions &>/dev/null; then
+        echo "Error: No tmux sessions running"
+        exit 1
+    fi
+
+    # Get session name (current session or provided)
+    if [ -n "${TMUX:-}" ]; then
+        # Inside tmux, save current session
+        SESSION=$(tmux display-message -p '#S')
+    elif [ $# -eq 1 ]; then
+        # Session name provided as argument
+        SESSION="$1"
+        if ! tmux has-session -t "$SESSION" 2>/dev/null; then
+            echo "Error: Session '$SESSION' does not exist"
+            exit 1
+        fi
+    else
+        # List sessions and let user choose
+        echo "Available sessions:"
+        tmux list-sessions -F "#{session_name}"
+        echo ""
+        read -rp "Enter session name to save: " SESSION
+
+        if [ -z "$SESSION" ]; then
+            echo "No session specified"
+            exit 1
+        fi
+    fi
+
+    # Save file path
+    SAVE_FILE="$SAVE_DIR/${SESSION}_${TIMESTAMP}.txt"
+
+    # Save session information
+    {
+        echo "# Tmux session save: $SESSION"
+        echo "# Saved at: $(date)"
+        echo "# Session: $SESSION"
+        echo ""
+
+        # Get current working directory of session
+        SESSION_CWD=$(tmux display-message -p -t "$SESSION" -F "#{pane_current_path}")
+        echo "SESSION_CWD=$SESSION_CWD"
+        echo ""
+
+        # Save windows
+        echo "# Windows:"
+        tmux list-windows -t "$SESSION" -F "#{window_index}:#{window_name}:#{pane_current_path}" | while IFS=: read -r idx name path; do
+            echo "WINDOW=$idx:$name:$path"
+        done
+
+        echo ""
+        echo "# Window layouts:"
+        tmux list-windows -t "$SESSION" -F "#{window_index}:#{window_layout}" | while IFS=: read -r idx layout; do
+            echo "LAYOUT=$idx:$layout"
+        done
+
+    } > "$SAVE_FILE"
+
+    echo "Session '$SESSION' saved to: $SAVE_FILE"
+    echo ""
+    echo "Restore with: tmux-restore $SAVE_FILE"
+}
+
+main "$@"

@@ -1,0 +1,125 @@
+#!/usr/bin/env bash
+# Restore tmux session from saved file
+
+set -euo pipefail
+
+SAVE_DIR="$HOME/.config/tmux/saved-sessions"
+
+# Show available saved sessions
+list_saved_sessions() {
+    if [ ! -d "$SAVE_DIR" ] || [ -z "$(ls -A "$SAVE_DIR" 2>/dev/null)" ]; then
+        echo "No saved sessions found in $SAVE_DIR"
+        return 1
+    fi
+
+    echo "Available saved sessions:"
+    ls -1t "$SAVE_DIR"/*.txt 2>/dev/null | while read -r file; do
+        basename "$file"
+        # Show first few lines of save file
+        grep "^# Saved at:" "$file" | sed 's/^# /  /'
+    done
+}
+
+# Restore session from file
+restore_session() {
+    local save_file="$1"
+
+    if [ ! -f "$save_file" ]; then
+        echo "Error: Save file not found: $save_file"
+        exit 1
+    fi
+
+    # Extract session name from save file
+    local original_session
+    original_session=$(grep "^# Session:" "$save_file" | cut -d' ' -f3)
+
+    # Ask for new session name (default to original)
+    read -rp "Enter session name (default: $original_session): " new_session
+    new_session=${new_session:-$original_session}
+
+    # Check if session already exists
+    if tmux has-session -t "$new_session" 2>/dev/null; then
+        echo "Error: Session '$new_session' already exists"
+        echo "Kill it first with: tmux kill-session -t $new_session"
+        exit 1
+    fi
+
+    # Get session working directory
+    local session_cwd
+    session_cwd=$(grep "^SESSION_CWD=" "$save_file" | cut -d'=' -f2)
+    session_cwd=${session_cwd:-$HOME}
+
+    # Create new session
+    echo "Creating session '$new_session'..."
+    tmux new-session -d -s "$new_session" -c "$session_cwd"
+
+    # Restore windows
+    local first_window=true
+    while IFS=: read -r idx name path; do
+        if [ "$first_window" = true ]; then
+            # First window already created, just rename it
+            tmux rename-window -t "$new_session:1" "$name"
+            first_window=false
+        else
+            # Create additional windows
+            tmux new-window -t "$new_session:$idx" -n "$name" -c "$path"
+        fi
+    done < <(grep "^WINDOW=" "$save_file" | cut -d'=' -f2)
+
+    # Restore layouts
+    while IFS=: read -r idx layout; do
+        tmux select-layout -t "$new_session:$idx" "$layout" 2>/dev/null || true
+    done < <(grep "^LAYOUT=" "$save_file" | cut -d'=' -f2)
+
+    # Select first window
+    tmux select-window -t "$new_session:1"
+
+    echo "Session '$new_session' restored!"
+    echo ""
+    echo "Attach with: tmux attach-session -t $new_session"
+
+    # Attach if not already in tmux
+    if [ -z "${TMUX:-}" ]; then
+        read -rp "Attach now? (y/N): " attach
+        if [[ "$attach" =~ ^[Yy]$ ]]; then
+            tmux attach-session -t "$new_session"
+        fi
+    fi
+}
+
+# Main logic
+main() {
+    if [ $# -eq 0 ]; then
+        # No argument, list saved sessions
+        if ! list_saved_sessions; then
+            exit 1
+        fi
+
+        echo ""
+        read -rp "Enter save file name to restore: " filename
+
+        if [ -z "$filename" ]; then
+            echo "No file specified"
+            exit 1
+        fi
+
+        # Build full path
+        if [[ "$filename" == /* ]]; then
+            save_file="$filename"
+        else
+            save_file="$SAVE_DIR/$filename"
+        fi
+    else
+        # Save file provided as argument
+        save_file="$1"
+
+        # If relative path, prefix with save dir
+        if [[ "$save_file" != /* ]]; then
+            save_file="$SAVE_DIR/$save_file"
+        fi
+    fi
+
+    restore_session "$save_file"
+}
+
+main "$@"

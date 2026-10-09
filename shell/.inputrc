@@ -1,0 +1,21 @@
+# Keep Debian defaults (Home/End/Del, Ctrl+Left/Right word jumps)
+$include /etc/inputrc
+
+# Completion
+set completion-ignore-case on     # cd des<Tab> -> Descargas/
+set completion-map-case on        # treat - and _ as equal when completing
+set show-all-if-ambiguous on      # list options on first Tab, no beep
+set mark-symlinked-directories on # add / to symlinked dirs
+set colored-stats on              # color completions like ls
+set colored-completion-prefix on  # highlight the part already typed
+set skip-completed-text on        # don't duplicate text after the cursor
+set bell-style none
+
+# Up/Down search history by what's already typed (empty line = normal)
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+"\eOA": history-search-backward
+"\eOB": history-search-forward
+
+# Ctrl+Backspace deletes the previous word
+"\C-h": backward-kill-word

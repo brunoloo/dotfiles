@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# Abre 3 Konsole y las ubica en el monitor externo:
+# izquierda y derecha a toda altura, la central detrás de ambas.
+# Funciona en KDE Plasma 6 (Wayland) pidiéndole a KWin que mueva las ventanas.
+
+OUTPUT="DP-1"   # monitor donde van las terminales (kscreen-doctor -o)
+WIDTH_PCT=45    # ancho de cada terminal, en % del ancho de la pantalla
+
+pids=()
+for _ in 1 2 3; do
+  konsole --separate >/dev/null 2>&1 &
+  pids+=($!)
+  disown
+done
+
+js="$(mktemp --suffix=.js)"
+trap 'rm -f "$js"' EXIT
+
+cat >"$js" <<EOF
+const pids = [${pids[0]}, ${pids[1]}, ${pids[2]}]; // izquierda, derecha, central
+const out = workspace.screens.find(s => s.name === "$OUTPUT") || workspace.activeScreen;
+const area = workspace.clientArea(KWin.MaximizeArea, out, workspace.currentDesktop);
+const w = Math.round(area.width * $WIDTH_PCT / 100);
+const xs = [area.x, area.x + area.width - w, area.x + Math.round((area.width - w) / 2)];
+
+const wins = pids.map(p => workspace.windowList().find(c => c.pid === p && c.normalWindow));
+wins.forEach((c, i) => {
+  if (!c) return;
+  c.setMaximize(false, false);
+  c.frameGeometry = { x: xs[i], y: area.y, width: w, height: area.height };
+});
+// Central primero, así queda detrás de las otras dos
+[2, 0, 1].forEach(i => { if (wins[i]) workspace.activeWindow = wins[i]; });
+EOF
+
+place() {
+  local name="setup-init-$$-$1" id
+  id="$(qdbus6 org.kde.KWin /Scripting org.kde.kwin.Scripting.loadScript "$js" "$name")" || return
+  qdbus6 org.kde.KWin "/Scripting/Script$id" org.kde.kwin.Script.run >/dev/null
+  qdbus6 org.kde.KWin /Scripting org.kde.kwin.Scripting.unloadScript "$name" >/dev/null
+}
+
+# Esperar a que las ventanas aparezcan; se repite por si alguna tarda más
+sleep 1.5; place 1
+sleep 1.5; place 2

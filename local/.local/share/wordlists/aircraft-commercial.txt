@@ -1,0 +1,475 @@
+Airbus A220-100
+Airbus A220-300
+Airbus A300-600
+Airbus A300-600F
+Airbus A300-600R
+Airbus A300-600RF
+Airbus A300-600ST Beluga
+Airbus A300B1
+Airbus A300B2-100
+Airbus A300B2-200
+Airbus A300B2-320
+Airbus A300B4-100
+Airbus A300B4-200
+Airbus A300B4-200FFCC
+Airbus A310-200
+Airbus A310-300
+Airbus A318
+Airbus A318 Elite
+Airbus A319-100
+Airbus A319neo
+Airbus A320-100
+Airbus A320-200
+Airbus A320neo
+Airbus A321-100
+Airbus A321-200
+Airbus A321neo
+Airbus A321XLR
+Airbus A330-200
+Airbus A330-200F
+Airbus A330-300
+Airbus A330-300HGW
+Airbus A330-800
+Airbus A330-900
+Airbus A330 MRTT
+Airbus A330P2F
+Airbus A330 Regional
+Airbus A340-200
+Airbus A340-300
+Airbus A340-500
+Airbus A340-600
+Airbus A350-1000
+Airbus A350-1000ULR
+Airbus A350-900
+Airbus A350-900ULR
+Airbus A350F
+Airbus A380-800
+Airbus A380F
+Airbus ACJ319
+Airbus ACJ320
+Airbus ACJ321
+Airbus ACJ330
+Airbus ACJ330neo
+Airbus ACJ340
+Airbus ACJ350
+Airbus ACJ TwoTwenty
+Airbus BelugaXL
+Antonov An-148-100A
+Antonov An-148-100B
+Antonov An-148-100E
+Antonov An-148-200
+Antonov An-148-300
+Antonov An-158
+Antonov An-178
+Antonov An-24
+Antonov An-24A
+Antonov An-24B
+Antonov An-24RT
+Antonov An-24RV
+Antonov An-24T
+Antonov An-24V
+ATR 42-200
+ATR 42-300
+ATR 42-320
+ATR 42-400
+ATR 42-500
+ATR 42-600
+ATR 42-600S
+ATR 72-101
+ATR 72-102
+ATR 72-201
+ATR 72-202
+ATR 72-211
+ATR 72-212
+ATR 72-500
+ATR 72-600
+ATR 72-600F
+ATR 72MP
+Avro RJ100
+Avro RJ70
+Avro RJ85
+Avro RJX-100
+Avro RJX-70
+Avro RJX-85
+BAC One-Eleven 200
+BAC One-Eleven 300
+BAC One-Eleven 400
+BAC One-Eleven 475
+BAC One-Eleven 500
+BAC One-Eleven 670
+BAC Super VC10
+BAC VC10
+BAe 146-100
+BAe 146-200
+BAe 146-300
+BAe 146 QC
+BAe 146 QT
+BAe 146STA
+Boeing 707-120
+Boeing 707-120B
+Boeing 707-138
+Boeing 707-220
+Boeing 707-320B
+Boeing 707-320C
+Boeing 707-320 Intercontinental
+Boeing 707-420
+Boeing 707-700
+Boeing 717-200
+Boeing 717 Business Express
+Boeing 720
+Boeing 720B
+Boeing 727-100
+Boeing 727-100C
+Boeing 727-100QC
+Boeing 727-100QF
+Boeing 727-200
+Boeing 727-200 Advanced
+Boeing 727-200C
+Boeing 727-200F Advanced
+Boeing 737-100
+Boeing 737-200
+Boeing 737-200 Advanced
+Boeing 737-200C
+Boeing 737-200QC
+Boeing 737-300
+Boeing 737-400
+Boeing 737-500
+Boeing 737-600
+Boeing 737-700
+Boeing 737-700C
+Boeing 737-700ER
+Boeing 737-800
+Boeing 737-900
+Boeing 737-900ER
+Boeing 737 MAX 10
+Boeing 737 MAX 7
+Boeing 737 MAX 8
+Boeing 737 MAX 8-200
+Boeing 737 MAX 9
+Boeing 747-100
+Boeing 747-100B
+Boeing 747-100BSR
+Boeing 747-100BSR SUD
+Boeing 747-200B
+Boeing 747-200C
+Boeing 747-200F
+Boeing 747-200M
+Boeing 747-300
+Boeing 747-300M
+Boeing 747-300SR
+Boeing 747-400
+Boeing 747-400BCF
+Boeing 747-400D
+Boeing 747-400 Dreamlifter
+Boeing 747-400ER
+Boeing 747-400ERF
+Boeing 747-400F
+Boeing 747-400M
+Boeing 747-8F
+Boeing 747-8 Intercontinental
+Boeing 747SP
+Boeing 747SR
+Boeing 757-200
+Boeing 757-200M
+Boeing 757-200PCF
+Boeing 757-200PF
+Boeing 757-200SF
+Boeing 757-300
+Boeing 767-200
+Boeing 767-200ER
+Boeing 767-200SF
+Boeing 767-2C
+Boeing 767-300
+Boeing 767-300ER
+Boeing 767-300F
+Boeing 767-400ER
+Boeing 777-200
+Boeing 777-200ER
+Boeing 777-200LR
+Boeing 777-300
+Boeing 777-300ER
+Boeing 777-8
+Boeing 777-8F
+Boeing 777-9
+Boeing 777F
+Boeing 787-10
+Boeing 787-8
+Boeing 787-9
+Boeing 787F
+Boeing Super 27
+Bombardier Challenger 300
+Bombardier Challenger 350
+Bombardier Challenger 600
+Bombardier Challenger 601
+Bombardier Challenger 604
+Bombardier Challenger 605
+Bombardier Challenger 650
+Bombardier CL-600
+Bombardier CRJ100
+Bombardier CRJ1000
+Bombardier CRJ1000EL
+Bombardier CRJ1000ER
+Bombardier CRJ200
+Bombardier CRJ200ER
+Bombardier CRJ200LR
+Bombardier CRJ550
+Bombardier CRJ700
+Bombardier CRJ700ER
+Bombardier CRJ701
+Bombardier CRJ701ER
+Bombardier CRJ702
+Bombardier CRJ702ER
+Bombardier CRJ705
+Bombardier CRJ900
+Bombardier CRJ900ER
+Bombardier CRJ900LR
+Bombardier DHC-8-100
+Bombardier DHC-8-101
+Bombardier DHC-8-102
+Bombardier DHC-8-103
+Bombardier DHC-8-200
+Bombardier DHC-8-201
+Bombardier DHC-8-202
+Bombardier DHC-8-300
+Bombardier DHC-8-301
+Bombardier DHC-8-311
+Bombardier DHC-8-314
+Bombardier DHC-8-315
+Bombardier DHC-8-400
+Bombardier Q100
+Bombardier Q200
+Bombardier Q300
+Bombardier Q400
+Bombardier Q400CC
+Bombardier Q400-MR
+Bombardier Q400 NextGen
+COMAC ARJ21-700
+COMAC ARJ21-900
+COMAC C909 CBJ
+COMAC C909 CCF
+COMAC C909 ER
+COMAC C909 MSJ
+COMAC C909 STD
+COMAC C919-100ER
+COMAC C919-100 STD
+COMAC C919-600
+COMAC C919-800
+Concorde
+Concorde B (proposed)
+Convair 880
+Convair 880-22M
+Convair 990 Coronado
+Convair CV-240
+Convair CV-300
+Convair CV-340
+Convair CV-440 Metropolitan
+Convair CV-540
+Convair CV-580
+Convair CV-600
+Convair CV-640
+de Havilland Canada DHC-6-100 Twin Otter
+de Havilland Canada DHC-6-200 Twin Otter
+de Havilland Canada DHC-6-300 Twin Otter
+de Havilland Canada DHC-6-400 Twin Otter
+de Havilland Canada DHC-7-100
+de Havilland Canada DHC-7-101
+de Havilland Canada DHC-7-102
+de Havilland Canada DHC-7-103
+de Havilland Canada DHC-7-150
+de Havilland Canada DHC-7-151
+Deutsche Aircraft D328eco
+Dornier 228-100
+Dornier 228-200
+Dornier 228NG
+Dornier 328-100
+Dornier 328-110
+Dornier 328-120
+Dornier 328-130
+Dornier 328JET
+Douglas DC-4
+Douglas DC-6
+Douglas DC-6A
+Douglas DC-6B
+Douglas DC-6C
+Douglas DC-7
+Douglas DC-7B
+Douglas DC-7C Seven Seas
+Douglas DC-8-10
+Douglas DC-8-20
+Douglas DC-8-30
+Douglas DC-8-40
+Douglas DC-8-50
+Douglas DC-8-61
+Douglas DC-8-62
+Douglas DC-8-63
+Douglas DC-8-70
+Embraer E170LR
+Embraer E170SE
+Embraer E170 STD
+Embraer E170SU
+Embraer E175-E2
+Embraer E175LR
+Embraer E175SC
+Embraer E175 STD
+Embraer E175SU
+Embraer E190AR
+Embraer E190-E2
+Embraer E190LR
+Embraer E190 STD
+Embraer E195AR
+Embraer E195-E2
+Embraer E195LR
+Embraer E195 STD
+Embraer ERJ 135
+Embraer ERJ 135ER
+Embraer ERJ 135LR
+Embraer ERJ 140
+Embraer ERJ 140ER
+Embraer ERJ 140LR
+Embraer ERJ 145
+Embraer ERJ 145EP
+Embraer ERJ 145ER
+Embraer ERJ 145EU
+Embraer ERJ 145LR
+Embraer ERJ 145LU
+Embraer ERJ 145MP
+Embraer ERJ 145XR
+Embraer Legacy 600
+Embraer Legacy 650
+Fairchild FH-227
+Fokker 100
+Fokker 100EJ
+Fokker 100QC
+Fokker 50
+Fokker 50 Mark 0502
+Fokker 60
+Fokker 70
+Fokker F27-100
+Fokker F27-200
+Fokker F27-200-MAR
+Fokker F27-300 Combiplane
+Fokker F27-300M Troopship
+Fokker F27-400
+Fokker F27-400M Troopship
+Fokker F27-500
+Fokker F27-500M
+Fokker F27-600
+Fokker F27-700
+Fokker F27 Maritime Enforcer
+Fokker F28-1000
+Fokker F28-2000
+Fokker F28-3000
+Fokker F28-4000
+Fokker F28-6000
+Hindustan-Dornier 228
+Ilyushin Il-114
+Ilyushin Il-114-100
+Ilyushin Il-114-300
+Ilyushin Il-114T
+Ilyushin Il-62
+Ilyushin Il-62M
+Ilyushin Il-62MGr
+Ilyushin Il-62MK
+Ilyushin Il-76P
+Ilyushin Il-76T
+Ilyushin Il-76TD
+Ilyushin Il-76TD-90
+Ilyushin Il-86
+Ilyushin Il-86D
+Ilyushin Il-86V
+Ilyushin Il-96-300
+Ilyushin Il-96-400
+Ilyushin Il-96-400M
+Ilyushin Il-96-400T
+Ilyushin Il-96M
+Lockheed L-049 Constellation
+Lockheed L-1011-100 TriStar
+Lockheed L-1011-150 TriStar
+Lockheed L-1011-1 TriStar
+Lockheed L-1011-200 TriStar
+Lockheed L-1011-250 TriStar
+Lockheed L-1011-500 TriStar
+Lockheed L-1011-50 TriStar
+Lockheed L-1049 Super Constellation
+Lockheed L-1649A Starliner
+Lockheed L-188A Electra
+Lockheed L-188C Electra
+Lockheed L-649 Constellation
+Lockheed L-749 Constellation
+McDonnell Douglas DC-10-10
+McDonnell Douglas DC-10-10CF
+McDonnell Douglas DC-10-15
+McDonnell Douglas DC-10-30
+McDonnell Douglas DC-10-30CF
+McDonnell Douglas DC-10-30ER
+McDonnell Douglas DC-10-30F
+McDonnell Douglas DC-10-40
+McDonnell Douglas DC-9-10
+McDonnell Douglas DC-9-20
+McDonnell Douglas DC-9-30
+McDonnell Douglas DC-9-40
+McDonnell Douglas DC-9-50
+McDonnell Douglas MD-10
+McDonnell Douglas MD-11
+McDonnell Douglas MD-11 BCF
+McDonnell Douglas MD-11C
+McDonnell Douglas MD-11CF
+McDonnell Douglas MD-11ER
+McDonnell Douglas MD-11F
+McDonnell Douglas MD-81
+McDonnell Douglas MD-82
+McDonnell Douglas MD-83
+McDonnell Douglas MD-87
+McDonnell Douglas MD-88
+McDonnell Douglas MD-90
+McDonnell Douglas MD-95
+Mitsubishi MRJ70
+Mitsubishi MRJ90
+Mitsubishi SpaceJet M100
+Mitsubishi SpaceJet M90
+Rombac 1-11-560
+Saab 2000
+Saab 340A
+Saab 340AF
+Saab 340B
+Saab 340BF
+Saab 340B Plus
+Tupolev Tu-104
+Tupolev Tu-104A
+Tupolev Tu-104B
+Tupolev Tu-104D
+Tupolev Tu-104G
+Tupolev Tu-104Sh
+Tupolev Tu-104V
+Tupolev Tu-110
+Tupolev Tu-134
+Tupolev Tu-134A
+Tupolev Tu-134A-2
+Tupolev Tu-134A-3
+Tupolev Tu-134A-5
+Tupolev Tu-134B
+Tupolev Tu-144
+Tupolev Tu-144D
+Tupolev Tu-144LL
+Tupolev Tu-154
+Tupolev Tu-154A
+Tupolev Tu-154B
+Tupolev Tu-154B-1
+Tupolev Tu-154B-2
+Tupolev Tu-154M
+Tupolev Tu-154M-100
+Tupolev Tu-154S
+Tupolev Tu-204-100
+Tupolev Tu-204-100C
+Tupolev Tu-204-120
+Tupolev Tu-204-120C
+Tupolev Tu-204-200
+Tupolev Tu-204-220
+Tupolev Tu-204-300
+Tupolev Tu-204-500
+Tupolev Tu-204SM
+Tupolev Tu-214
+Tupolev Tu-214ON
+Tupolev Tu-214PU
+Tupolev Tu-214R
+Tupolev Tu-214SR

@@ -1,0 +1,412 @@
+#!/usr/bin/env bash
+
+# Dotfiles de Bruno - Debian (escritorio KDE o servidor)
+# Instala paquetes y despliega la config con GNU stow
+
+set -e # Exit on error
+
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$DOTFILES_DIR/scripts"
+
+# Default: no SSH/UFW changes unless --ssh-port is provided
+SSH_PORT=""
+# --skip-packages: solo despliega la config (symlinks + KDE), sin apt/sudo
+SKIP_PACKAGES=false
+
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --ssh-port)
+      SSH_PORT="$2"
+      shift 2
+      ;;
+    --ssh-port=*)
+      SSH_PORT="${1#*=}"
+      shift
+      ;;
+    --skip-packages)
+      SKIP_PACKAGES=true
+      shift
+      ;;
+    -h|--help)
+      echo "Usage: ./install [OPTIONS]"
+      echo ""
+      echo "Options:"
+      echo "  --ssh-port PORT   Configure SSH and UFW for custom port"
+      echo "  --skip-packages   Only deploy config (no apt, no sudo)"
+      echo "  -h, --help        Show this help"
+      exit 0
+      ;;
+    *)
+      echo "Unknown option: $1"
+      exit 1
+      ;;
+  esac
+done
+
+# Source common functions
+source "$SCRIPT_DIR/common.sh"
+
+echo "======================================"
+echo "  Dotfiles - Debian"
+echo "======================================"
+echo ""
+
+# ============================================================================
+# 1. Git Configuration
+# ============================================================================
+
+configure_git
+
+# ============================================================================
+# 2. Ensure stow is available
+# ============================================================================
+
+if [ "$SKIP_PACKAGES" = false ] && ! command_exists stow; then
+  log_info "Installing GNU stow..."
+  sudo apt update && sudo apt install -y stow
+fi
+
+# ============================================================================
+# 3. Install packages
+# ============================================================================
+
+log_info "Installing system packages..."
+echo ""
+
+if [ "$SKIP_PACKAGES" = false ]; then
+  bash "$SCRIPT_DIR/packages/core.sh"
+  echo ""
+
+  bash "$SCRIPT_DIR/packages/terminal.sh"
+  echo ""
+else
+  log_info "--skip-packages: skipping package installation"
+fi
+
+# ============================================================================
+# 4. Deploy dotfiles with stow
+# ============================================================================
+
+log_info "Deploying dotfiles with GNU stow..."
+echo ""
+
+cd "$DOTFILES_DIR"
+
+# Backup existing files that would conflict
+BACKUP_DIR="$HOME/.dotfiles-backup-$(date +%Y%m%d-%H%M%S)"
+BACKUP_NEEDED=false
+
+backup_if_needed() {
+  local path="$1"
+  if [ -e "$path" ] && [ ! -L "$path" ]; then
+    if [ "$BACKUP_NEEDED" = false ]; then
+      mkdir -p "$BACKUP_DIR"
+      log_info "Creating backup directory: $BACKUP_DIR"
+      BACKUP_NEEDED=true
+    fi
+
+    local relative_path="${path#$HOME/}"
+    local backup_path="$BACKUP_DIR/$relative_path"
+    mkdir -p "$(dirname "$backup_path")"
+
+    if [ -d "$path" ]; then
+      cp -a "$path" "$(dirname "$backup_path")/"
+      rm -rf "$path"
+      log_info "Backed up directory: ~/$relative_path"
+    else
+      mv "$path" "$backup_path"
+      log_info "Backed up file: ~/$relative_path"
+    fi
+  fi
+}
+
+# Check and backup conflicting files/directories
+log_info "Checking for conflicting files..."
+backup_if_needed "$HOME/.bashrc"
+backup_if_needed "$HOME/.vimrc"
+backup_if_needed "$HOME/.tmux.conf"
+backup_if_needed "$HOME/.local/share/konsole/bruno-verde-pc.profile"
+
+for dir in \
+  "$HOME/.config/tmux" \
+  "$HOME/.config/nvim" \
+  "$HOME/.config/starship.toml"; do
+  if [ -e "$dir" ] && [ ! -L "$dir" ]; then
+    backup_if_needed "$dir"
+  fi
+done
+
+if [ "$BACKUP_NEEDED" = true ]; then
+  echo ""
+  log_success "Existing files backed up to: $BACKUP_DIR"
+  echo ""
+fi
+
+# Stow packages
+STOW_PACKAGES=(
+  "shell"
+  "tmux"
+  "neovim"
+  "scripts-local"
+  "local"
+  "claude-home"
+  "opencode"
+)
+# Escritorio KDE: solo si hay Konsole instalada
+if command_exists konsole; then
+  STOW_PACKAGES+=("kde")
+  mkdir -p "$HOME/.local/share/konsole" "$HOME/.local/share/applications"
+fi
+
+# Prevent stow tree folding for directories with non-stow-managed content
+mkdir -p "$HOME/.claude"
+mkdir -p "$HOME/.local/bin"
+mkdir -p "$HOME/.config/opencode"
+
+STOW_SUCCESS=()
+STOW_FAILED=()
+
+for package in "${STOW_PACKAGES[@]}"; do
+  log_info "Stowing $package..."
+
+  # Unstow first to clean up any old symlinks
+  stow --delete "$package" 2>/dev/null || true
+
+  # Use --no-folding for packages that share directories with non-stow content
+  if [ "$package" = "scripts-local" ] || [ "$package" = "claude-home" ] || [ "$package" = "opencode" ] || [ "$package" = "kde" ]; then
+    stow_cmd="stow --restow --no-folding"
+  else
+    stow_cmd="stow --restow"
+  fi
+
+  # claude-home: never stow settings.json — Claude Code rewrites it as a real file
+  # at runtime, so stow conflicts on it and ABORTS THE WHOLE PACKAGE, wiping the
+  # statusline + sound symlinks. Ignore it here; it is seeded separately below.
+  if [ "$package" = "claude-home" ]; then
+    stow_cmd="$stow_cmd --ignore=settings\.json"
+  fi
+
+  if $stow_cmd "$package" 2>&1; then
+    STOW_SUCCESS+=("$package")
+    log_success "$package deployed"
+  else
+    STOW_FAILED+=("$package")
+    log_error "$package failed to deploy"
+  fi
+done
+
+# Seed Claude Code settings.json (real file, NOT symlinked — Claude Code owns it at
+# runtime). Copy the repo's version only if the box has none; never overwrite an
+# existing one, which would clobber machine-local settings Claude has written.
+if [ ! -e "$HOME/.claude/settings.json" ]; then
+  log_info "Seeding ~/.claude/settings.json from repo..."
+  cp "$DOTFILES_DIR/claude-home/.claude/settings.json" "$HOME/.claude/settings.json"
+  log_success "settings.json seeded"
+else
+  log_success "~/.claude/settings.json already present — left untouched"
+fi
+
+# Optionally apply starship nerd-font-symbols preset (writes through stow symlink)
+if [ "$SKIP_PACKAGES" = false ] && command_exists starship; then
+  echo ""
+  if ask_yes_no "Apply starship nerd-font-symbols preset?"; then
+    starship preset nerd-font-symbols -o "$HOME/.config/starship.toml"
+    log_success "starship nerd-font-symbols preset applied"
+  fi
+fi
+
+echo ""
+
+# ============================================================================
+# 5. Enable loginctl linger
+# ============================================================================
+
+if [ "$SKIP_PACKAGES" = true ]; then
+  :
+elif loginctl show-user "$USER" --property=Linger 2>/dev/null | grep -q "Linger=yes"; then
+  log_success "Linger already enabled for $USER"
+else
+  log_info "Enabling linger for $USER..."
+  sudo loginctl enable-linger "$USER"
+  log_success "Linger enabled for $USER"
+fi
+
+echo ""
+
+# ============================================================================
+# 6. Configure SSH + UFW (if --ssh-port provided)
+# ============================================================================
+
+if [ -n "$SSH_PORT" ]; then
+  log_info "Configuring SSH on port $SSH_PORT..."
+
+  SSHD_CONFIG="/etc/ssh/sshd_config"
+  if [ -f "$SSHD_CONFIG" ]; then
+    if grep -qE "^Port\s+$SSH_PORT\s*$" "$SSHD_CONFIG"; then
+      log_success "SSH already configured on port $SSH_PORT"
+    else
+      # Remove any existing uncommented Port directives
+      sudo sed -i '/^Port\s/d' "$SSHD_CONFIG"
+      # Add our port
+      echo "Port $SSH_PORT" | sudo tee -a "$SSHD_CONFIG" > /dev/null
+      sudo systemctl restart sshd
+      log_success "SSH configured on port $SSH_PORT"
+    fi
+  fi
+
+  log_info "Configuring UFW..."
+  if command_exists ufw; then
+    # Allow the SSH port
+    sudo ufw allow "$SSH_PORT/tcp" comment "SSH"
+    # Enable UFW (idempotent — no-op if already enabled)
+    sudo ufw --force enable
+    log_success "UFW enabled: port $SSH_PORT/tcp allowed"
+  fi
+
+  echo ""
+fi
+
+# ============================================================================
+# 7. Install ProtonVPN CLI
+# ============================================================================
+
+if [ "$SKIP_PACKAGES" = false ]; then
+  bash "$SCRIPT_DIR/packages/protonvpn.sh"
+  echo ""
+fi
+
+# ============================================================================
+# 8. Install earlyoom (OOM guard — prevents memory-exhaustion hard freezes)
+# ============================================================================
+
+if [ "$SKIP_PACKAGES" = false ]; then
+  bash "$SCRIPT_DIR/packages/earlyoom.sh"
+  echo ""
+fi
+
+# ============================================================================
+# 9. Install Docker (last, as requested)
+# ============================================================================
+
+if [ "$SKIP_PACKAGES" = false ]; then
+  bash "$SCRIPT_DIR/packages/docker.sh"
+  echo ""
+fi
+
+# ============================================================================
+# 10. KDE: perfil de Konsole, ícono setup_init y atajo Meta+Alt+T
+# ============================================================================
+
+# Los *rc de KDE se escriben con kwriteconfig6 (KDE los reescribe en runtime,
+# un symlink de stow no sobreviviría)
+if command_exists konsole && command_exists kwriteconfig6; then
+  log_info "Configuring KDE..."
+
+  kwriteconfig6 --file konsolerc --group "Desktop Entry" --key DefaultProfile bruno-verde-pc.profile
+  log_success "Konsole default profile: bruno-verde-pc (verde sobre negro)"
+
+  # Ícono en el escritorio: copia real, para poder renombrarlo/cambiarle el ícono
+  DESKTOP_DIR="$(xdg-user-dir DESKTOP 2>/dev/null || echo "$HOME/Desktop")"
+  if [ ! -e "$DESKTOP_DIR/setup_init.desktop" ]; then
+    mkdir -p "$DESKTOP_DIR"
+    cp "$DOTFILES_DIR/kde/.local/share/applications/setup-init.desktop" "$DESKTOP_DIR/setup_init.desktop"
+    chmod +x "$DESKTOP_DIR/setup_init.desktop"
+    log_success "Desktop icon: $DESKTOP_DIR/setup_init.desktop"
+  else
+    log_success "Desktop icon already present — left untouched"
+  fi
+
+  # Atajo global (se activa al volver a iniciar sesión); no pisa uno ya asignado
+  if [ -z "$(kreadconfig6 --file kglobalshortcutsrc --group services --group setup-init.desktop --key _launch)" ]; then
+    kwriteconfig6 --file kglobalshortcutsrc --group services --group setup-init.desktop --key _launch "Meta+Alt+T"
+    log_success "Shortcut Meta+Alt+T -> setup_init (active after re-login)"
+  fi
+  command_exists kbuildsycoca6 && kbuildsycoca6 >/dev/null 2>&1
+  echo ""
+fi
+
+# ============================================================================
+# 11. Verify symlinks
+# ============================================================================
+
+log_info "Verifying symlink deployment..."
+
+VERIFY_PATHS=(
+  "$HOME/.bashrc:shell"
+  "$HOME/.vimrc:shell"
+  "$HOME/.inputrc:shell"
+  "$HOME/.config/starship.toml:shell"
+  "$HOME/.tmux.conf:tmux"
+  "$HOME/.config/tmux/tmux.conf:tmux"
+  "$HOME/.config/tmux/scripts/git-status.sh:tmux"
+  "$HOME/.config/nvim/init.lua:neovim"
+  "$HOME/.config/nvim/lua/config/lazy.lua:neovim"
+  "$HOME/.local/bin/tmux-session:scripts-local"
+  "$HOME/.local/bin/tmux-project:scripts-local"
+  "$HOME/.local/bin/tmux-save:scripts-local"
+  "$HOME/.local/bin/tmux-restore:scripts-local"
+  "$HOME/.local/bin/terminal-tmux-bash:scripts-local"
+  "$HOME/.local/share/wordlists/mit-top-10000-en.txt:local"
+  "$HOME/.claude/statusline-command.sh:claude-home"
+  "$HOME/.claude/settings.json:seeded"
+  "$HOME/.claude/sounds/start.wav:claude-home"
+  "$HOME/.config/opencode/tui.json:opencode"
+  "$HOME/.config/opencode/plugins/sounds.js:opencode"
+)
+if command_exists konsole; then
+  VERIFY_PATHS+=(
+    "$HOME/.local/bin/setup-init:kde"
+    "$HOME/.local/share/konsole/bruno-verde-pc.profile:kde"
+    "$HOME/.local/share/applications/setup-init.desktop:kde"
+  )
+fi
+
+VERIFY_SUCCESS=0
+VERIFY_FAILED=0
+
+for item in "${VERIFY_PATHS[@]}"; do
+  path="${item%%:*}"
+  package="${item##*:}"
+
+  if [ -L "$path" ] || [ -e "$path" ]; then
+    VERIFY_SUCCESS=$((VERIFY_SUCCESS + 1))
+    log_success "$path ($package)"
+  else
+    VERIFY_FAILED=$((VERIFY_FAILED + 1))
+    log_error "Missing: $path ($package)"
+  fi
+done
+
+echo ""
+log_success "Verified: $VERIFY_SUCCESS/$((VERIFY_SUCCESS + VERIFY_FAILED)) symlinks"
+
+if [ $VERIFY_FAILED -gt 0 ]; then
+  log_warning "$VERIFY_FAILED items were not deployed properly"
+fi
+
+# ============================================================================
+# Done
+# ============================================================================
+
+echo ""
+echo "======================================"
+echo "  Installation Complete!"
+echo "======================================"
+echo ""
+echo "Next steps:"
+echo "  - Reload shell: source ~/.bashrc"
+echo "  - Reload tmux:  prefix+r (or tmux source-file ~/.config/tmux/tmux.conf)"
+echo "  - First nvim launch will auto-install plugins"
+echo ""
+if [ -n "$SSH_PORT" ]; then
+  echo "SSH/UFW:"
+  echo "  - SSH listening on port $SSH_PORT"
+  echo "  - UFW allowing $SSH_PORT/tcp"
+  echo ""
+fi
+if groups "$USER" 2>/dev/null | grep -q docker; then
+  echo "Docker:"
+  echo "  - Re-login for docker group to take effect"
+  echo ""
+fi

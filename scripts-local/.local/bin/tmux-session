@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# Tmux session manager - terminal version
+# Creates, attaches, or switches tmux sessions
+
+set -euo pipefail
+
+NEW_SESSION_TEXT="+ New session"
+
+# Main logic
+main() {
+  if ! command -v tmux &>/dev/null; then
+    echo "Error: tmux is not installed" >&2
+    exit 1
+  fi
+
+  # If inside tmux, use built-in session switcher
+  if [ -n "${TMUX:-}" ]; then
+    tmux choose-tree -Zs
+    exit 0
+  fi
+
+  # Build menu
+  mapfile -t options < <(
+    echo "$NEW_SESSION_TEXT"
+    if tmux ls &>/dev/null; then
+      tmux ls -F "#{?session_attached,✓,○} #{session_name}" 2>/dev/null
+    fi
+  )
+
+  echo "Tmux Sessions:"
+  echo "---"
+  select choice in "${options[@]}"; do
+    [ -n "$choice" ] && break
+  done
+
+  if [ -z "${choice:-}" ]; then
+    exit 0
+  fi
+
+  # Handle new session
+  if [[ "$choice" == "$NEW_SESSION_TEXT" ]]; then
+    read -rp "Session name: " session_name
+    [ -z "$session_name" ] && exit 0
+    tmux new-session -s "$session_name"
+    exit 0
+  fi
+
+  # Extract session name (remove status indicators)
+  session_name=$(echo "$choice" | sed -E 's/^(✓|○) //')
+  tmux attach-session -t "$session_name"
+}
+
+main "$@"

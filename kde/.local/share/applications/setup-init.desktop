@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=setup_init
+Comment=Abre 3 terminales y las ubica en el monitor externo
+Exec=sh -c '"$HOME/.local/bin/setup-init"'
+Icon=utilities-terminal
+Terminal=false
+Categories=Utility;

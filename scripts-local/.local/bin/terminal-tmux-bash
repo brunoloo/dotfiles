@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Create a new tmux session named "bash-WORD" with random word from wordlist
+
+set -euo pipefail
+
+WORDLIST="$HOME/.local/share/wordlists/mit-top-10000-en.txt"
+
+if [ ! -f "$WORDLIST" ]; then
+    echo "Error: Wordlist not found at $WORDLIST" >&2
+    exit 1
+fi
+
+# Find a random word that doesn't conflict with existing sessions
+while true; do
+    word=$(shuf -n 1 "$WORDLIST")
+
+    if ! tmux has-session -t "bash-$word" 2>/dev/null; then
+        if [ -n "${TMUX:-}" ]; then
+            tmux new-session -d -s "bash-$word"
+            tmux switch-client -t "bash-$word"
+        else
+            tmux new-session -s "bash-$word"
+        fi
+        break
+    fi
+done
