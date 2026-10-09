@@ -17,7 +17,7 @@ El instalador:
 
 1. Instala los paquetes (apt, Neovim, starship, eza, Node, Docker, etc.). Pide `sudo`.
 2. Crea symlinks de cada config a tu `$HOME` con [GNU stow](https://www.gnu.org/software/stow/). Si ya tenías un archivo propio, primero lo mueve a `~/.dotfiles-backup-<fecha>/`.
-3. Si detecta KDE, configura Konsole, el ícono `setup_init` del escritorio y el atajo `Meta+Alt+T`.
+3. Si detecta KDE, configura Konsole (verde sobre negro), el tema Breeze Dark, el ícono `setup_init` del escritorio y el atajo `Meta+Alt+T`. El tema y el atajo terminan de aplicarse al volver a iniciar sesión.
 
 Opciones:
 
@@ -37,7 +37,8 @@ Como los archivos son symlinks, editar `~/.bashrc` es editar el repo: después `
 | | |
 |---|---|
 | **`setup-init`** / ícono **setup_init** / **`Meta+Alt+T`** | Abre 3 Konsole y las ubica en el monitor externo: una en cada costado (45% del ancho, toda la altura) y la tercera centrada detrás; un click en la franja del medio la trae al frente. Funciona en Wayland usando el scripting de KWin. El monitor y el ancho se cambian arriba del todo en el script (`OUTPUT`, `WIDTH_PCT`). |
-| **Perfil de Konsole** | `bruno-verde-pc`: verde sobre negro, como perfil por defecto. |
+| **Konsole** | Perfil `bruno-verde-pc` por defecto: esquema GreenOnBlack (verde sobre negro) con la fuente Hack. |
+| **Tema** | Breeze Dark (colores e íconos). No toca el fondo de pantalla, el panel ni los escritorios virtuales. |
 
 El ícono del escritorio es una copia normal: se le puede cambiar el nombre o el ícono desde click derecho → Propiedades.
 
