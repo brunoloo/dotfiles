@@ -26,6 +26,7 @@ install_packages \
   tmux \
   jq \
   lazygit \
+  git-delta \
   openssh-server \
   net-tools \
   isc-dhcp-client \

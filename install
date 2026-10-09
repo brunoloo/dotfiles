@@ -127,6 +127,8 @@ backup_if_needed "$HOME/.bashrc"
 backup_if_needed "$HOME/.vimrc"
 backup_if_needed "$HOME/.tmux.conf"
 backup_if_needed "$HOME/.local/share/konsole/bruno-verde-pc.profile"
+backup_if_needed "$HOME/.config/lazygit/config.yml"
+backup_if_needed "$HOME/.config/git/config"
 
 for dir in \
   "$HOME/.config/tmux" \
@@ -152,6 +154,7 @@ STOW_PACKAGES=(
   "local"
   "claude-home"
   "opencode"
+  "git"
 )
 # Escritorio KDE: solo si hay Konsole instalada
 if command_exists konsole; then
@@ -163,6 +166,7 @@ fi
 mkdir -p "$HOME/.claude"
 mkdir -p "$HOME/.local/bin"
 mkdir -p "$HOME/.config/opencode"
+mkdir -p "$HOME/.config/git" "$HOME/.config/lazygit"
 
 STOW_SUCCESS=()
 STOW_FAILED=()
@@ -174,7 +178,7 @@ for package in "${STOW_PACKAGES[@]}"; do
   stow --delete "$package" 2>/dev/null || true
 
   # Use --no-folding for packages that share directories with non-stow content
-  if [ "$package" = "scripts-local" ] || [ "$package" = "claude-home" ] || [ "$package" = "opencode" ] || [ "$package" = "kde" ]; then
+  if [ "$package" = "scripts-local" ] || [ "$package" = "claude-home" ] || [ "$package" = "opencode" ] || [ "$package" = "kde" ] || [ "$package" = "git" ]; then
     stow_cmd="stow --restow --no-folding"
   else
     stow_cmd="stow --restow"
@@ -356,6 +360,8 @@ VERIFY_PATHS=(
   "$HOME/.claude/sounds/start.wav:claude-home"
   "$HOME/.config/opencode/tui.json:opencode"
   "$HOME/.config/opencode/plugins/sounds.js:opencode"
+  "$HOME/.config/git/config:git"
+  "$HOME/.config/lazygit/config.yml:git"
 )
 if command_exists konsole; then
   VERIFY_PATHS+=(

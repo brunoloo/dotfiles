@@ -1,104 +1,115 @@
 # dotfiles
 
-Mi entorno de trabajo en Linux (Debian + KDE Plasma): terminal, shell, tmux, Neovim, atajos y un layout de escritorio que se arma con una tecla. Todo se instala con un solo comando.
+🇬🇧 **English** · 🇺🇾 [Español](README.es.md)
 
-> **Créditos:** la base de este repo (bash, tmux, Neovim, starship, scripts de tmux, hooks de Claude Code) es la configuración de mi compañero de trabajo [Salvador Borit](https://github.com/salvaborit) ([dotfiles-debian](https://github.com/salvaborit/dotfiles-debian)), publicada acá con su permiso. Encima le agregué mis cosas: el escritorio KDE, `setup-init`, alias, historial, fzf/bat/direnv y más.
+My Linux setup (Debian + KDE Plasma): terminal, shell, tmux, Neovim, git and a desktop layout that opens with one key. One command installs all of it.
 
-## Instalación
+> **Credits:** the base of this repo (bash, tmux, Neovim, starship, tmux scripts, Claude Code hooks) is the config of my coworker [Salvador Borit](https://github.com/salvaborit) ([dotfiles-debian](https://github.com/salvaborit/dotfiles-debian)), shared here with his permission. On top of it I added my own stuff: the KDE desktop, `setup-init`, aliases, history, fzf/bat/direnv, delta and more.
 
-En un Debian recién instalado:
+## Install
+
+On a fresh Debian:
 
 ```bash
 git clone https://github.com/brunoloo/dotfiles.git ~/dotfiles
 ~/dotfiles/install
 ```
 
-El instalador:
+The installer:
 
-1. Instala los paquetes (apt, Neovim, starship, eza, Node, Docker, etc.). Pide `sudo`.
-2. Crea symlinks de cada config a tu `$HOME` con [GNU stow](https://www.gnu.org/software/stow/). Si ya tenías un archivo propio, primero lo mueve a `~/.dotfiles-backup-<fecha>/`.
-3. Si detecta KDE, configura Konsole (verde sobre negro), el tema Breeze Dark, el ícono `setup_init` del escritorio y el atajo `Meta+Alt+T`. El tema y el atajo terminan de aplicarse al volver a iniciar sesión.
+1. Installs packages (apt, Neovim, starship, eza, Node, Docker, etc.). Needs `sudo`.
+2. Symlinks every config into your `$HOME` with [GNU stow](https://www.gnu.org/software/stow/). Any file of your own that's in the way gets moved first to `~/.dotfiles-backup-<date>/`.
+3. If it finds KDE, it sets up Konsole (green on black), the Breeze Dark theme, the `setup_init` desktop icon and the `Meta+Alt+T` shortcut. The theme and the shortcut fully apply after logging in again.
 
-Opciones:
+Options:
 
 ```bash
-~/dotfiles/install --skip-packages     # solo la config, sin apt ni sudo
-~/dotfiles/install --ssh-port 2121     # además configura sshd + firewall (servidores)
+~/dotfiles/install --skip-packages     # config only, no apt, no sudo
+~/dotfiles/install --ssh-port 2121     # also configures sshd + firewall (servers)
 ```
 
-Se puede correr las veces que quieras: lo que ya está instalado lo saltea.
+You can run it as many times as you want: whatever is already installed gets skipped.
 
-Como los archivos son symlinks, editar `~/.bashrc` es editar el repo: después `git commit` + `git push` y el cambio queda guardado para la próxima máquina.
+Since the files are symlinks, editing `~/.bashrc` edits the repo: then `git commit` + `git push` and the change is saved for the next machine.
 
-## Qué trae
+## What's inside
 
-### Escritorio KDE
+### KDE desktop
 
 | | |
 |---|---|
-| **`setup-init`** / ícono **setup_init** / **`Meta+Alt+T`** | Abre 3 Konsole y las ubica en el monitor externo: una en cada costado (45% del ancho, toda la altura) y la tercera centrada detrás; un click en la franja del medio la trae al frente. Funciona en Wayland usando el scripting de KWin. El monitor y el ancho se cambian arriba del todo en el script (`OUTPUT`, `WIDTH_PCT`). |
-| **Konsole** | Perfil `bruno-verde-pc` por defecto: esquema GreenOnBlack (verde sobre negro) con la fuente Hack. |
-| **Tema** | Breeze Dark (colores e íconos). No toca el fondo de pantalla, el panel ni los escritorios virtuales. |
+| **`setup-init`** / **setup_init** icon / **`Meta+Alt+T`** | Opens 3 Konsole windows and places them on the external monitor: one on each side (45% wide, full height) and the third one centered behind them; clicking the strip in the middle brings it to the front. Works on Wayland using KWin scripting. The monitor and width are set at the top of the script (`OUTPUT`, `WIDTH_PCT`). |
+| **Konsole** | `bruno-verde-pc` as default profile: GreenOnBlack color scheme with the Hack font. |
+| **Theme** | Breeze Dark (colors and icons). Leaves your wallpaper, panel and virtual desktops alone. |
 
-El ícono del escritorio es una copia normal: se le puede cambiar el nombre o el ícono desde click derecho → Propiedades.
+The desktop icon is a regular copy: rename it or change its icon from right click → Properties.
 
 ### Shell (bash)
 
-- **Prompt** con [starship](https://starship.rs) (rama de git, estado, lenguaje del proyecto).
-- **Historial** enorme, con fecha y compartido entre todas las terminales abiertas.
-- **fzf:** `Ctrl+R` busca en el historial, `Ctrl+T` elige un archivo, `Alt+C` salta a una carpeta.
-- **`.inputrc`:** autocompletado sin distinguir mayúsculas; ↑/↓ buscan en el historial lo que empezaste a escribir.
-- **zoxide:** `cd` aprende tus carpetas frecuentes (`cd proy` → `~/trabajo/proyecto`).
-- **bat**, **eza**, **direnv**, **bash-completion** y fechas en formato uruguayo.
+- **Prompt** by [starship](https://starship.rs) (git branch, status, project language).
+- **History:** huge, timestamped and shared across all open terminals.
+- **fzf:** `Ctrl+R` searches history, `Ctrl+T` picks a file, `Alt+C` jumps to a folder.
+- **`.inputrc`:** case-insensitive completion; ↑/↓ search history for what you started typing.
+- **zoxide:** `cd` learns your frequent folders (`cd proj` → `~/work/project`).
+- **bat**, **eza**, **direnv**, **bash-completion** and Uruguayan date format.
 
-Alias y funciones más usados:
+Most used aliases and functions:
 
-| Comando | Qué hace |
+| Command | What it does |
 |---|---|
-| `ta`, `tb`, `tc`… | `ssh t-dmi-a`, `ssh t-dmi-b`… Se arman solos con cada `Host t-dmi-X` de `~/.ssh/config` y solo existen en la PC, no dentro de una sesión ssh. |
-| `mkcd dir` | crea la carpeta y entra |
-| `ex archivo` | descomprime cualquier formato (tar, zip, 7z, rar…) |
-| `ls`, `ll`, `lt` | listados con eza (íconos, árbol, estado de git) |
-| `g`, `gits`, `gitd`, `gitac "msg"`, `gg` | git y lazygit |
-| `d`, `dc`, `dcu`, `dcud`, `dcd`, `dp`… | docker y docker compose |
+| `ta`, `tb`, `tc`… | `ssh t-dmi-a`, `ssh t-dmi-b`… Built automatically from every `Host t-dmi-X` in `~/.ssh/config`; they only exist on the PC, not inside an ssh session. |
+| `mkcd dir` | creates the folder and enters it |
+| `ex file` | extracts any archive (tar, zip, 7z, rar…) |
+| `ls`, `ll`, `lt` | eza listings (icons, tree, git status) |
+| `g`, `gits`, `gitd`, `gitac "msg"`, `gg` | git and lazygit |
+| `d`, `dc`, `dcu`, `dcud`, `dcd`, `dp`… | docker and docker compose |
 | `n` | nvim |
-| `cc`, `ccc`, `ccw` | Claude Code (normal, sin permisos, en worktree) |
-| `serve [puerto]` | servidor HTTP en la carpeta actual |
-| `note`, `todo`, `notes` | notas rápidas en `~/notes.md` |
+| `cc`, `ccc`, `ccw` | Claude Code (normal, skip permissions, in a worktree) |
+| `serve [port]` | HTTP server for the current folder |
+| `note`, `todo`, `notes` | quick notes in `~/notes.md` |
 | `q`, `c` | exit, clear |
 
-`aliases` muestra la lista completa.
+`aliases` prints the full list.
+
+### Git
+
+- **[delta](https://github.com/dandavid/delta)** as pager: `git diff`, `git log -p` and `git show` with syntax highlighting and line numbers; `n`/`N` jump between files.
+- **lazygit** (`gg`) shows diffs through delta.
+- Merge conflicts in `zdiff3` style (also shows the original version).
+
+This lives in `~/.config/git/config`. Your name, email and credentials stay in `~/.gitconfig`, which isn't in the repo: the installer asks for them.
 
 ### tmux
 
-Configuración y barra de estado con git, más scripts:
+Config and a status bar with git info, plus scripts:
 
-- `tmux-session`: elegir o crear una sesión;
-- `tmux-project`: sesión editor + terminal para un repo de `~/prj/`;
-- `tmux-save` / `tmux-restore`: guardar y restaurar sesiones.
+- `tmux-session`: pick or create a session;
+- `tmux-project`: editor + terminal session for a repo in `~/prj/`;
+- `tmux-save` / `tmux-restore`: save and restore sessions.
 
 ### Neovim
 
-Setup completo basado en [LazyVim](https://www.lazyvim.org). Los plugins se descargan solos la primera vez que abrís `nvim`.
+Full setup based on [LazyVim](https://www.lazyvim.org). Plugins download on their own the first time you open `nvim`.
 
-### Otros
+### Other
 
-- **Claude Code:** statusline y sonidos al empezar, terminar o pedir permiso.
-- **opencode:** atajos y los mismos sonidos.
+- **Claude Code:** statusline and sounds on start, finish or permission prompt.
+- **opencode:** keybinds and the same sounds.
 - **ProtonVPN:** `vpn-up`, `vpn-down`, `vpn-status` ([docs](docs/protonvpn-debian.md)).
 
-## Estructura
+## Layout
 
-Cada carpeta es un paquete de stow que replica la estructura de `$HOME`:
+Each folder is a stow package mirroring `$HOME`:
 
 ```
 shell/          .bashrc, .inputrc, .vimrc, starship.toml
-tmux/           tmux.conf + script de git para la barra
+tmux/           tmux.conf + git script for the status bar
 neovim/         ~/.config/nvim
-kde/            setup-init, perfil de Konsole, entrada del menú
-scripts-local/  scripts de tmux y VPN en ~/.local/bin
-claude-home/    statusline y sonidos de Claude Code
-opencode/       config de opencode
-local/          lista de palabras para nombres de sesiones
-scripts/        funciones del instalador y paquetes
+kde/            setup-init, Konsole profile, menu entry
+git/            delta (~/.config/git/config) and lazygit
+scripts-local/  tmux and VPN scripts in ~/.local/bin
+claude-home/    Claude Code statusline and sounds
+opencode/       opencode config
+local/          word list for session names
+scripts/        installer functions and packages
 ```

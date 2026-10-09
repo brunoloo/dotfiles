@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-Personal dotfiles for Debian (KDE Plasma desktop, also usable on headless servers). Based on Salvador Borit's dotfiles-debian (used with permission). Manages configuration files using GNU Stow with a modular install script. GUI bits live only in the `kde/` package, which `install` stows only when Konsole is present.
+Personal dotfiles (README.md in English, README.es.md in Spanish — keep both in sync) for Debian (KDE Plasma desktop, also usable on headless servers). Based on Salvador Borit's dotfiles-debian (used with permission). Manages configuration files using GNU Stow with a modular install script. GUI bits live only in the `kde/` package, which `install` stows only when Konsole is present.
 
 ## Architecture
 
@@ -17,6 +17,7 @@ Each top-level directory is a **stow package** that maps to `$HOME`:
 - `local/` — `.local/share/wordlists/` (10k word list used by terminal-tmux-bash)
 - `claude-home/` — `.claude/` (statusline script + sound hooks via PulseAudio/SSH, stowed with `--no-folding`). **`settings.json` is NOT stowed** — it's `--ignore`d by stow and instead *seeded* (copied if absent) by `install`, because Claude Code rewrites it as a real file at runtime. Symlinking it caused a stow conflict that aborted the whole package and wiped the statusline + sound links.
 - `kde/` — `.local/bin/setup-init` (opens 3 Konsole windows and places them via KWin scripting over D-Bus), Konsole profile, `setup-init.desktop` menu entry (stowed with `--no-folding`). `install` also sets konsolerc DefaultProfile, copies the desktop icon and registers Meta+Alt+T via kwriteconfig6.
+- `git/` — `.config/git/config` (delta pager, zdiff3; identity stays in the untracked `~/.gitconfig`) and `.config/lazygit/config.yml` (stowed with `--no-folding`).
 - `opencode/` — `.config/opencode/tui.json` (keybinds: Home/End for input bar, not scroll) and `.config/opencode/plugins/sounds.js` (event plugin reusing `claude-home`'s `~/.claude/sounds/*.wav` via `paplay`, mapped to `session.created`/`permission.asked`/`session.compacted`/`session.idle`). Stowed with `--no-folding` since `~/.config/opencode/` also holds non-stow-managed `opencode.json`, `agents/`, `node_modules/`.
 
 Install infrastructure:

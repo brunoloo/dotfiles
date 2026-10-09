@@ -1,0 +1,10 @@
+# Config visual de git (la identidad y credenciales quedan en ~/.gitconfig, fuera del repo)
+[core]
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+	line-numbers = true
+[merge]
+	conflictStyle = zdiff3
