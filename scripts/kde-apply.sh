@@ -40,7 +40,7 @@ apply_konsole() {
     sed 's|^Exec=konsole\( --new-tab\)\?$|Exec=env QT_STYLE_OVERRIDE=Fusion konsole\1|' "$src" >"$dst"
     command_exists kbuildsycoca6 && kbuildsycoca6 >/dev/null 2>&1 || true
   fi
-  log_success "Konsole: Dracula (opacidad 0.65 + blur), scrollbar roja"
+  log_success "Konsole: Dracula (opacidad 0.6 + blur), scrollbar roja"
 }
 
 # ----------------------------------------------------------------------------
@@ -78,6 +78,8 @@ apply_kwin() {
   kw --file kwinrc --group Plugins --key squashEnabled false
   kw --file kwinrc --group Effect-magiclamp --key AnimationDuration 400
   kw --file kwinrc --group Tiling --key padding 4
+  # Intensidad del blur: es global de KWin (afecta a todo lo translúcido), no de Konsole
+  kw --file kwinrc --group Effect-blur --key BlurStrength 2
 
   # El layout con el orden más bajo es el que usa Krohnkite por defecto: Columns primero
   local order=(columns tile threeColumn monocle spiral quarter stacked spread floating stair binaryTree cascade)
@@ -92,7 +94,8 @@ apply_kwin() {
     qdbus6 org.kde.KWin /KWin reconfigure >/dev/null 2>&1
     qdbus6 org.kde.KWin /Effects org.kde.kwin.Effects.loadEffect magiclamp >/dev/null 2>&1
     qdbus6 org.kde.KWin /Effects org.kde.kwin.Effects.unloadEffect squash >/dev/null 2>&1
-    log_success "KWin: Krohnkite (Columns), Magic Lamp 400 ms, sin Squash"
+    qdbus6 org.kde.KWin /Effects org.kde.kwin.Effects.reconfigureEffect blur >/dev/null 2>&1
+    log_success "KWin: Krohnkite (Columns), Magic Lamp 400 ms, sin Squash, blur suave"
   else
     PENDING+=("KWin: efectos y Krohnkite (la config quedó escrita; se carga al iniciar sesión)")
   fi

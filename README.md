@@ -41,7 +41,7 @@ Since the files are symlinks, editing `~/.bashrc` edits the repo: then `git comm
 | | |
 |---|---|
 | **`setup-init`** / **setup_init** icon / **`Meta+Alt+T`** | Opens 3 Konsole windows and places them on the external monitor: one on each side (45% wide, full height) and the third one centered behind them; clicking the strip in the middle brings it to the front. Works on Wayland using KWin scripting. The monitor and width are set at the top of the script (`OUTPUT`, `WIDTH_PCT`). |
-| **Konsole** | `Dracula` profile and color scheme: 0.65 opacity with blur, JetBrainsMono Nerd Font, zsh, no menu bar or tab bar. Red scrollbar: Konsole starts with the Fusion style (`~/.local/bin/konsole` wrapper), because with Breeze the scrollbar takes the terminal text color. |
+| **Konsole** | `Dracula` profile and color scheme: 0.6 opacity with blur and a light global blur (BlurStrength=2), JetBrainsMono Nerd Font, zsh, no menu bar or tab bar. Red scrollbar: Konsole starts with the Fusion style (`~/.local/bin/konsole` wrapper), because with Breeze the scrollbar takes the terminal text color. |
 | **Theme** | [WhiteSur](https://github.com/vinceliuice/WhiteSur-kde) (macOS style): colors, Plasma style, icons, cursor and window decoration (buttons on the right). Installed from upstream at a pinned commit. |
 | **Tiling** | [Krohnkite](https://github.com/anametologin/krohnkite) with `Columns` as the default layout. `Meta+H/J/K/L` focus, `Meta+Shift+H/J/K/L` move, `Meta+Ctrl+H/J/K/L` resize, `Meta+F` float, `Meta+\` next layout. |
 | **Panel** | A single full-width bar at the bottom: menu, numbered virtual desktops, centered app icons, tray and a `dd/MM/yyyy` clock. 2 virtual desktops. |
