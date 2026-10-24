@@ -1,0 +1,3 @@
+#!/bin/sh
+# Konsole con estilo Fusion (scrollbar roja). Borrar este archivo para revertir.
+exec env QT_STYLE_OVERRIDE=Fusion /usr/bin/konsole "$@"
