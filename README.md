@@ -17,14 +17,16 @@ git clone https://github.com/brunoloo/dotfiles.git ~/dotfiles
 
 The installer:
 
-1. Installs packages (apt, Neovim, starship, eza, Node, Docker, etc.). Needs `sudo`.
+1. Installs packages (apt, Neovim, starship, eza, zsh + Oh My Zsh, Docker, etc.) and the apps (Brave, VirtualBox, VS Code, Wireshark, Node.js). Needs `sudo`.
 2. Symlinks every config into your `$HOME` with [GNU stow](https://www.gnu.org/software/stow/). Any file of your own that's in the way gets moved first to `~/.dotfiles-backup-<date>/`.
-3. If it finds KDE, it sets up Konsole (green on black), the Breeze Dark theme, the `setup_init` desktop icon and the `Meta+Alt+T` shortcut. The theme and the shortcut fully apply after logging in again.
+3. If it finds KDE, it installs the JetBrainsMono Nerd Font, Krohnkite and the WhiteSur theme, and applies the whole desktop with `scripts/kde-apply.sh` (see below). The cursor and the shortcuts fully apply after logging in again.
 
 Options:
 
 ```bash
 ~/dotfiles/install --skip-packages     # config only, no apt, no sudo
+~/dotfiles/install --skip-desktop      # no WhiteSur/Krohnkite/font and no KDE config
+~/dotfiles/install --skip-apps         # no Brave, VirtualBox, Wireshark, VS Code, Node.js
 ~/dotfiles/install --ssh-port 2121     # also configures sshd + firewall (servers)
 ```
 
@@ -39,14 +41,23 @@ Since the files are symlinks, editing `~/.bashrc` edits the repo: then `git comm
 | | |
 |---|---|
 | **`setup-init`** / **setup_init** icon / **`Meta+Alt+T`** | Opens 3 Konsole windows and places them on the external monitor: one on each side (45% wide, full height) and the third one centered behind them; clicking the strip in the middle brings it to the front. Works on Wayland using KWin scripting. The monitor and width are set at the top of the script (`OUTPUT`, `WIDTH_PCT`). |
-| **Konsole** | `bruno-verde-pc` as default profile: GreenOnBlack color scheme with the Hack font. |
-| **Theme** | Breeze Dark (colors and icons). Leaves your wallpaper, panel and virtual desktops alone. |
+| **Konsole** | `Dracula` profile and color scheme: 0.65 opacity with blur, JetBrainsMono Nerd Font, zsh, no menu bar or tab bar. Red scrollbar: Konsole starts with the Fusion style (`~/.local/bin/konsole` wrapper), because with Breeze the scrollbar takes the terminal text color. |
+| **Theme** | [WhiteSur](https://github.com/vinceliuice/WhiteSur-kde) (macOS style): colors, Plasma style, icons, cursor and window decoration (buttons on the right). Installed from upstream at a pinned commit. |
+| **Tiling** | [Krohnkite](https://github.com/anametologin/krohnkite) with `Columns` as the default layout. `Meta+H/J/K/L` focus, `Meta+Shift+H/J/K/L` move, `Meta+Ctrl+H/J/K/L` resize, `Meta+F` float, `Meta+\` next layout. |
+| **Panel** | A single full-width bar at the bottom: menu, numbered virtual desktops, centered app icons, tray and a `dd/MM/yyyy` clock. 2 virtual desktops. |
+| **Shortcuts** | `Ctrl+Alt+←/→` previous/next desktop, `Ctrl+Alt+L` lock session, `Meta+L` Krohnkite focus right. |
+| **Effects** | Magic Lamp (400 ms) instead of Squash when minimizing. |
+| **Wallpaper** | `kde/.local/share/wallpapers/wallpaper.png`. |
+| **KDE Connect** | Disabled to save RAM. Turn it on again with `kdeconnect-activar` ([docs](docs/reactivar-kdeconnect.md)). |
+
+KDE rewrites its own `*rc` files at runtime, so they are not symlinked: `scripts/kde-apply.sh` sets them with `kwriteconfig6` and D-Bus (panel layout in `scripts/kde/panel.js`). It is idempotent and you can run it again whenever you want, for instance after logging in to Plasma if the installer ran without a session.
 
 The desktop icon is a regular copy: rename it or change its icon from right click → Properties.
 
-### Shell (bash)
+### Shell (zsh, with bash as a fallback)
 
-- **Prompt** by [starship](https://starship.rs) (git branch, status, project language).
+- **zsh** with [Oh My Zsh](https://ohmyz.sh) and `zsh-syntax-highlighting` (no autosuggestions). A fixed Dracula palette: green valid commands, pink keywords/operators, orange options, cyan existing paths, yellow strings, purple variables, red errors.
+- **Prompt** by [starship](https://starship.rs): colored pastel capsules (home, folder, git branch, git status, only when there are changes), with Nerd Font icons.
 - **History:** huge, timestamped and shared across all open terminals.
 - **fzf:** `Ctrl+R` searches history, `Ctrl+T` picks a file, `Alt+C` jumps to a folder.
 - **`.inputrc`:** case-insensitive completion; ↑/↓ search history for what you started typing.
@@ -94,11 +105,12 @@ Full setup based on [LazyVim](https://www.lazyvim.org). Plugins download on thei
 Each folder is a stow package mirroring `$HOME`:
 
 ```
-shell/          .bashrc, .inputrc, .vimrc, starship.toml
+shell/          .bashrc (fallback), .inputrc, .vimrc, starship.toml
+zsh/            .zshrc (Oh My Zsh, Dracula palette, aliases)
 neovim/         ~/.config/nvim
-kde/            setup-init, Konsole profile, menu entry
+kde/            Konsole (Dracula profile and scheme, Fusion wrapper), red color scheme, wallpaper, setup-init
 git/            delta (~/.config/git/config) and lazygit
-scripts-local/  VPN scripts in ~/.local/bin
+scripts-local/  VPN and KDE Connect scripts in ~/.local/bin
 claude-home/    Claude Code statusline and sounds
 opencode/       opencode config
 local/          word list for session names
