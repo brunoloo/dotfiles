@@ -41,7 +41,7 @@ Como los archivos son symlinks, editar `~/.bashrc` es editar el repo: después `
 | | |
 |---|---|
 | **`setup-init`** / ícono **setup_init** / **`Meta+Alt+T`** | Abre 3 Konsole y las ubica en el monitor externo: una en cada costado (45% del ancho, toda la altura) y la tercera centrada detrás; un click en la franja del medio la trae al frente. Funciona en Wayland usando el scripting de KWin. El monitor y el ancho se cambian arriba del todo en el script (`OUTPUT`, `WIDTH_PCT`). |
-| **Konsole** | Perfil y esquema `Dracula`: opacidad 0.65 con blur, fuente JetBrainsMono Nerd Font, zsh, sin barra de menú ni de pestañas. Scrollbar roja: Konsole arranca con el estilo Fusion (wrapper `~/.local/bin/konsole`), porque con Breeze la scrollbar toma el color del texto de la terminal. |
+| **Konsole** | Perfil y esquema `Dracula`: opacidad 0.6 con blur y un desenfoque global suave (BlurStrength=2), fuente JetBrainsMono Nerd Font, zsh, sin barra de menú ni de pestañas. Scrollbar roja: Konsole arranca con el estilo Fusion (wrapper `~/.local/bin/konsole`), porque con Breeze la scrollbar toma el color del texto de la terminal. |
 | **Tema** | [WhiteSur](https://github.com/vinceliuice/WhiteSur-kde) (estilo macOS): colores, estilo de Plasma, íconos, cursor y decoración de ventanas (botones a la derecha). Se instala desde el repo oficial, fijado a un commit. |
 | **Tiling** | [Krohnkite](https://github.com/anametologin/krohnkite) con `Columns` como layout por defecto. `Meta+H/J/K/L` foco, `Meta+Shift+H/J/K/L` mover, `Meta+Ctrl+H/J/K/L` redimensionar, `Meta+F` flotar, `Meta+\` siguiente layout. |
 | **Panel** | Una sola barra inferior a lo ancho: menú, escritorios virtuales numerados, íconos de apps centrados, bandeja y reloj `dd/MM/yyyy`. 2 escritorios virtuales. |
