@@ -2,9 +2,9 @@
 
 🇺🇸 [English](README.md) · 🇺🇾 **Español**
 
-Mi entorno de trabajo en Linux (Debian + KDE Plasma): terminal, shell, tmux, Neovim, atajos y un layout de escritorio que se arma con una tecla. Todo se instala con un solo comando.
+Mi entorno de trabajo en Linux (Debian + KDE Plasma): terminal, shell, Neovim, atajos y un layout de escritorio que se arma con una tecla. Todo se instala con un solo comando.
 
-> **Créditos:** la base de este repo (bash, tmux, Neovim, starship, scripts de tmux, hooks de Claude Code) es la configuración de mi compañero de trabajo [Salvador Borit](https://github.com/salvaborit) ([dotfiles-debian](https://github.com/salvaborit/dotfiles-debian)), publicada acá con su permiso. Encima le agregué mis cosas: el escritorio KDE, `setup-init`, alias, historial, fzf/bat/direnv y más.
+> **Créditos:** la base de este repo (bash, tmux, Neovim, starship, hooks de Claude Code) es la configuración de mi compañero de trabajo [Salvador Borit](https://github.com/salvaborit) ([dotfiles-debian](https://github.com/salvaborit/dotfiles-debian)), publicada acá con su permiso. Encima le agregué mis cosas: el escritorio KDE, `setup-init`, alias, historial, fzf/bat/direnv y más.
 
 ## Instalación
 
@@ -79,14 +79,6 @@ Alias y funciones más usados:
 
 Esto va en `~/.config/git/config`. Tu nombre, mail y credenciales quedan en `~/.gitconfig`, que no está en el repo: el instalador te los pregunta.
 
-### tmux
-
-Configuración y barra de estado con git, más scripts:
-
-- `tmux-session`: elegir o crear una sesión;
-- `tmux-project`: sesión editor + terminal para un repo de `~/prj/`;
-- `tmux-save` / `tmux-restore`: guardar y restaurar sesiones.
-
 ### Neovim
 
 Setup completo basado en [LazyVim](https://www.lazyvim.org). Los plugins se descargan solos la primera vez que abrís `nvim`.
@@ -103,10 +95,9 @@ Cada carpeta es un paquete de stow que replica la estructura de `$HOME`:
 
 ```
 shell/          .bashrc, .inputrc, .vimrc, starship.toml
-tmux/           tmux.conf + script de git para la barra
 neovim/         ~/.config/nvim
 kde/            setup-init, perfil de Konsole, entrada del menú
-scripts-local/  scripts de tmux y VPN en ~/.local/bin
+scripts-local/  scripts de VPN en ~/.local/bin
 claude-home/    statusline y sonidos de Claude Code
 opencode/       config de opencode
 git/            delta (~/.config/git/config) y lazygit

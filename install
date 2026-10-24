@@ -125,13 +125,11 @@ backup_if_needed() {
 log_info "Checking for conflicting files..."
 backup_if_needed "$HOME/.bashrc"
 backup_if_needed "$HOME/.vimrc"
-backup_if_needed "$HOME/.tmux.conf"
 backup_if_needed "$HOME/.local/share/konsole/bruno-verde-pc.profile"
 backup_if_needed "$HOME/.config/lazygit/config.yml"
 backup_if_needed "$HOME/.config/git/config"
 
 for dir in \
-  "$HOME/.config/tmux" \
   "$HOME/.config/nvim" \
   "$HOME/.config/starship.toml"; do
   if [ -e "$dir" ] && [ ! -L "$dir" ]; then
@@ -148,7 +146,6 @@ fi
 # Stow packages
 STOW_PACKAGES=(
   "shell"
-  "tmux"
   "neovim"
   "scripts-local"
   "local"
@@ -344,16 +341,8 @@ VERIFY_PATHS=(
   "$HOME/.vimrc:shell"
   "$HOME/.inputrc:shell"
   "$HOME/.config/starship.toml:shell"
-  "$HOME/.tmux.conf:tmux"
-  "$HOME/.config/tmux/tmux.conf:tmux"
-  "$HOME/.config/tmux/scripts/git-status.sh:tmux"
   "$HOME/.config/nvim/init.lua:neovim"
   "$HOME/.config/nvim/lua/config/lazy.lua:neovim"
-  "$HOME/.local/bin/tmux-session:scripts-local"
-  "$HOME/.local/bin/tmux-project:scripts-local"
-  "$HOME/.local/bin/tmux-save:scripts-local"
-  "$HOME/.local/bin/tmux-restore:scripts-local"
-  "$HOME/.local/bin/terminal-tmux-bash:scripts-local"
   "$HOME/.local/share/wordlists/mit-top-10000-en.txt:local"
   "$HOME/.claude/statusline-command.sh:claude-home"
   "$HOME/.claude/settings.json:seeded"
@@ -405,7 +394,6 @@ echo "======================================"
 echo ""
 echo "Next steps:"
 echo "  - Reload shell: source ~/.bashrc"
-echo "  - Reload tmux:  prefix+r (or tmux source-file ~/.config/tmux/tmux.conf)"
 echo "  - First nvim launch will auto-install plugins"
 echo ""
 if [ -n "$SSH_PORT" ]; then

@@ -2,9 +2,9 @@
 
 🇺🇸 **English** · 🇺🇾 [Español](README.es.md)
 
-My Linux setup (Debian + KDE Plasma): terminal, shell, tmux, Neovim, git and a desktop layout that opens with one key. One command installs all of it.
+My Linux setup (Debian + KDE Plasma): terminal, shell, Neovim, git and a desktop layout that opens with one key. One command installs all of it.
 
-> **Credits:** the base of this repo (bash, tmux, Neovim, starship, tmux scripts, Claude Code hooks) is the config of my coworker [Salvador Borit](https://github.com/salvaborit) ([dotfiles-debian](https://github.com/salvaborit/dotfiles-debian)), shared here with his permission. On top of it I added my own stuff: the KDE desktop, `setup-init`, aliases, history, fzf/bat/direnv, delta and more.
+> **Credits:** the base of this repo (bash, tmux, Neovim, starship, Claude Code hooks) is the config of my coworker [Salvador Borit](https://github.com/salvaborit) ([dotfiles-debian](https://github.com/salvaborit/dotfiles-debian)), shared here with his permission. On top of it I added my own stuff: the KDE desktop, `setup-init`, aliases, history, fzf/bat/direnv, delta and more.
 
 ## Install
 
@@ -79,14 +79,6 @@ Most used aliases and functions:
 
 This lives in `~/.config/git/config`. Your name, email and credentials stay in `~/.gitconfig`, which isn't in the repo: the installer asks for them.
 
-### tmux
-
-Config and a status bar with git info, plus scripts:
-
-- `tmux-session`: pick or create a session;
-- `tmux-project`: editor + terminal session for a repo in `~/prj/`;
-- `tmux-save` / `tmux-restore`: save and restore sessions.
-
 ### Neovim
 
 Full setup based on [LazyVim](https://www.lazyvim.org). Plugins download on their own the first time you open `nvim`.
@@ -103,11 +95,10 @@ Each folder is a stow package mirroring `$HOME`:
 
 ```
 shell/          .bashrc, .inputrc, .vimrc, starship.toml
-tmux/           tmux.conf + git script for the status bar
 neovim/         ~/.config/nvim
 kde/            setup-init, Konsole profile, menu entry
 git/            delta (~/.config/git/config) and lazygit
-scripts-local/  tmux and VPN scripts in ~/.local/bin
+scripts-local/  VPN scripts in ~/.local/bin
 claude-home/    Claude Code statusline and sounds
 opencode/       opencode config
 local/          word list for session names
