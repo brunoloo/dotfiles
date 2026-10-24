@@ -23,7 +23,6 @@ install_packages \
   ufw \
   gnupg \
   stow \
-  tmux \
   jq \
   lazygit \
   git-delta \

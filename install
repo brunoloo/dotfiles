@@ -12,6 +12,10 @@ SCRIPT_DIR="$DOTFILES_DIR/scripts"
 SSH_PORT=""
 # --skip-packages: solo despliega la config (symlinks + KDE), sin apt/sudo
 SKIP_PACKAGES=false
+# --skip-desktop: no instala WhiteSur/Krohnkite/fuente ni aplica la config de KDE
+SKIP_DESKTOP=false
+# --skip-apps: no instala Brave, VirtualBox, Wireshark, VS Code ni Node.js
+SKIP_APPS=false
 
 # Parse arguments
 while [[ $# -gt 0 ]]; do
@@ -28,12 +32,22 @@ while [[ $# -gt 0 ]]; do
       SKIP_PACKAGES=true
       shift
       ;;
+    --skip-desktop)
+      SKIP_DESKTOP=true
+      shift
+      ;;
+    --skip-apps)
+      SKIP_APPS=true
+      shift
+      ;;
     -h|--help)
       echo "Usage: ./install [OPTIONS]"
       echo ""
       echo "Options:"
       echo "  --ssh-port PORT   Configure SSH and UFW for custom port"
       echo "  --skip-packages   Only deploy config (no apt, no sudo)"
+      echo "  --skip-desktop    Skip WhiteSur/Krohnkite/font and the KDE config (scripts/kde-apply.sh)"
+      echo "  --skip-apps       Skip Brave, VirtualBox, Wireshark, VS Code and Node.js"
       echo "  -h, --help        Show this help"
       exit 0
       ;;
@@ -80,6 +94,9 @@ if [ "$SKIP_PACKAGES" = false ]; then
 
   bash "$SCRIPT_DIR/packages/terminal.sh"
   echo ""
+
+  bash "$SCRIPT_DIR/packages/zsh.sh"
+  echo ""
 else
   log_info "--skip-packages: skipping package installation"
 fi
@@ -125,13 +142,18 @@ backup_if_needed() {
 log_info "Checking for conflicting files..."
 backup_if_needed "$HOME/.bashrc"
 backup_if_needed "$HOME/.vimrc"
-backup_if_needed "$HOME/.tmux.conf"
-backup_if_needed "$HOME/.local/share/konsole/bruno-verde-pc.profile"
+backup_if_needed "$HOME/.zshrc"
+backup_if_needed "$HOME/.local/share/konsole/Dracula.profile"
+backup_if_needed "$HOME/.local/share/konsole/Dracula.colorscheme"
+backup_if_needed "$HOME/.local/share/color-schemes/WhiteSurDarkRed.colors"
+backup_if_needed "$HOME/.local/bin/konsole"
+backup_if_needed "$HOME/.local/share/wallpapers/wallpaper.png"
+backup_if_needed "$HOME/.local/bin/kdeconnect-activar"
+backup_if_needed "$HOME/.local/bin/kdeconnect-desactivar"
 backup_if_needed "$HOME/.config/lazygit/config.yml"
 backup_if_needed "$HOME/.config/git/config"
 
 for dir in \
-  "$HOME/.config/tmux" \
   "$HOME/.config/nvim" \
   "$HOME/.config/starship.toml"; do
   if [ -e "$dir" ] && [ ! -L "$dir" ]; then
@@ -148,7 +170,7 @@ fi
 # Stow packages
 STOW_PACKAGES=(
   "shell"
-  "tmux"
+  "zsh"
   "neovim"
   "scripts-local"
   "local"
@@ -291,7 +313,23 @@ if [ "$SKIP_PACKAGES" = false ]; then
 fi
 
 # ============================================================================
-# 10. KDE: perfil de Konsole, ícono setup_init y atajo Meta+Alt+T
+# 9b. Apps (Brave, VirtualBox, Wireshark, VS Code, Node.js) y piezas del escritorio
+#     (fuente Nerd Font, Krohnkite, WhiteSur)
+# ============================================================================
+
+if [ "$SKIP_PACKAGES" = false ]; then
+  if [ "$SKIP_APPS" = false ]; then
+    bash "$SCRIPT_DIR/packages/apps.sh"
+    echo ""
+  fi
+  if [ "$SKIP_DESKTOP" = false ]; then
+    bash "$SCRIPT_DIR/packages/desktop.sh"
+    echo ""
+  fi
+fi
+
+# ============================================================================
+# 10. KDE: config del escritorio (scripts/kde-apply.sh), ícono setup_init y Meta+Alt+T
 # ============================================================================
 
 # Los *rc de KDE se escriben con kwriteconfig6 (KDE los reescribe en runtime,
@@ -299,19 +337,13 @@ fi
 if command_exists konsole && command_exists kwriteconfig6; then
   log_info "Configuring KDE..."
 
-  # Hack es la fuente monoespaciada por defecto de KDE (la que usa Konsole)
-  if [ "$SKIP_PACKAGES" = false ]; then
-    install_packages fonts-hack
+  # Konsole (perfil Dracula), tema WhiteSur, KWin/Krohnkite, atajos, panel, fondo...
+  # Lo que necesita sesión de Plasma abierta lo avisa al final y se puede repetir.
+  if [ "$SKIP_DESKTOP" = false ]; then
+    bash "$SCRIPT_DIR/kde-apply.sh"
+  else
+    log_info "--skip-desktop: skipping KDE config (scripts/kde-apply.sh)"
   fi
-
-  kwriteconfig6 --file konsolerc --group "Desktop Entry" --key DefaultProfile bruno-verde-pc.profile
-  log_success "Konsole default profile: bruno-verde-pc (verde sobre negro)"
-
-  # Tema oscuro: colores + íconos Breeze Dark. No toca fondo, panel ni escritorios.
-  kwriteconfig6 --file kdeglobals --group KDE --key LookAndFeelPackage org.kde.breezedark.desktop
-  kwriteconfig6 --file kdeglobals --group Icons --key Theme breeze-dark
-  command_exists plasma-apply-colorscheme && plasma-apply-colorscheme BreezeDark >/dev/null 2>&1 || true
-  log_success "Theme: Breeze Dark (colors + icons)"
 
   # Ícono en el escritorio: copia real, para poder renombrarlo/cambiarle el ícono
   DESKTOP_DIR="$(xdg-user-dir DESKTOP 2>/dev/null || echo "$HOME/Desktop")"
@@ -344,16 +376,9 @@ VERIFY_PATHS=(
   "$HOME/.vimrc:shell"
   "$HOME/.inputrc:shell"
   "$HOME/.config/starship.toml:shell"
-  "$HOME/.tmux.conf:tmux"
-  "$HOME/.config/tmux/tmux.conf:tmux"
-  "$HOME/.config/tmux/scripts/git-status.sh:tmux"
+  "$HOME/.zshrc:zsh"
   "$HOME/.config/nvim/init.lua:neovim"
   "$HOME/.config/nvim/lua/config/lazy.lua:neovim"
-  "$HOME/.local/bin/tmux-session:scripts-local"
-  "$HOME/.local/bin/tmux-project:scripts-local"
-  "$HOME/.local/bin/tmux-save:scripts-local"
-  "$HOME/.local/bin/tmux-restore:scripts-local"
-  "$HOME/.local/bin/terminal-tmux-bash:scripts-local"
   "$HOME/.local/share/wordlists/mit-top-10000-en.txt:local"
   "$HOME/.claude/statusline-command.sh:claude-home"
   "$HOME/.claude/settings.json:seeded"
@@ -366,7 +391,11 @@ VERIFY_PATHS=(
 if command_exists konsole; then
   VERIFY_PATHS+=(
     "$HOME/.local/bin/setup-init:kde"
-    "$HOME/.local/share/konsole/bruno-verde-pc.profile:kde"
+    "$HOME/.local/share/konsole/Dracula.profile:kde"
+    "$HOME/.local/share/konsole/Dracula.colorscheme:kde"
+    "$HOME/.local/share/color-schemes/WhiteSurDarkRed.colors:kde"
+    "$HOME/.local/bin/konsole:kde"
+    "$HOME/.local/share/wallpapers/wallpaper.png:kde"
     "$HOME/.local/share/applications/setup-init.desktop:kde"
   )
 fi
@@ -404,8 +433,7 @@ echo "  Installation Complete!"
 echo "======================================"
 echo ""
 echo "Next steps:"
-echo "  - Reload shell: source ~/.bashrc"
-echo "  - Reload tmux:  prefix+r (or tmux source-file ~/.config/tmux/tmux.conf)"
+echo "  - Reload shell: exec zsh (log out and in so zsh is the default everywhere)"
 echo "  - First nvim launch will auto-install plugins"
 echo ""
 if [ -n "$SSH_PORT" ]; then

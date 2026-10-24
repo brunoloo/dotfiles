@@ -2,9 +2,9 @@
 
 🇺🇸 [English](README.md) · 🇺🇾 **Español**
 
-Mi entorno de trabajo en Linux (Debian + KDE Plasma): terminal, shell, tmux, Neovim, atajos y un layout de escritorio que se arma con una tecla. Todo se instala con un solo comando.
+Mi entorno de trabajo en Linux (Debian + KDE Plasma): terminal, shell, Neovim, atajos y un layout de escritorio que se arma con una tecla. Todo se instala con un solo comando.
 
-> **Créditos:** la base de este repo (bash, tmux, Neovim, starship, scripts de tmux, hooks de Claude Code) es la configuración de mi compañero de trabajo [Salvador Borit](https://github.com/salvaborit) ([dotfiles-debian](https://github.com/salvaborit/dotfiles-debian)), publicada acá con su permiso. Encima le agregué mis cosas: el escritorio KDE, `setup-init`, alias, historial, fzf/bat/direnv y más.
+> **Créditos:** la base de este repo (bash, tmux, Neovim, starship, hooks de Claude Code) es la configuración de mi compañero de trabajo [Salvador Borit](https://github.com/salvaborit) ([dotfiles-debian](https://github.com/salvaborit/dotfiles-debian)), publicada acá con su permiso. Encima le agregué mis cosas: el escritorio KDE, `setup-init`, alias, historial, fzf/bat/direnv y más.
 
 ## Instalación
 
@@ -17,14 +17,16 @@ git clone https://github.com/brunoloo/dotfiles.git ~/dotfiles
 
 El instalador:
 
-1. Instala los paquetes (apt, Neovim, starship, eza, Node, Docker, etc.). Pide `sudo`.
+1. Instala los paquetes (apt, Neovim, starship, eza, zsh + Oh My Zsh, Docker, etc.) y las apps (Brave, VirtualBox, VS Code, Wireshark, Node.js). Pide `sudo`.
 2. Crea symlinks de cada config a tu `$HOME` con [GNU stow](https://www.gnu.org/software/stow/). Si ya tenías un archivo propio, primero lo mueve a `~/.dotfiles-backup-<fecha>/`.
-3. Si detecta KDE, configura Konsole (verde sobre negro), el tema Breeze Dark, el ícono `setup_init` del escritorio y el atajo `Meta+Alt+T`. El tema y el atajo terminan de aplicarse al volver a iniciar sesión.
+3. Si detecta KDE, instala la fuente JetBrainsMono Nerd Font, Krohnkite y el tema WhiteSur, y aplica todo el escritorio con `scripts/kde-apply.sh` (ver abajo). El cursor y los atajos terminan de aplicarse al volver a iniciar sesión.
 
 Opciones:
 
 ```bash
 ~/dotfiles/install --skip-packages     # solo la config, sin apt ni sudo
+~/dotfiles/install --skip-desktop      # sin WhiteSur/Krohnkite/fuente ni config de KDE
+~/dotfiles/install --skip-apps         # sin Brave, VirtualBox, Wireshark, VS Code, Node.js
 ~/dotfiles/install --ssh-port 2121     # además configura sshd + firewall (servidores)
 ```
 
@@ -39,14 +41,23 @@ Como los archivos son symlinks, editar `~/.bashrc` es editar el repo: después `
 | | |
 |---|---|
 | **`setup-init`** / ícono **setup_init** / **`Meta+Alt+T`** | Abre 3 Konsole y las ubica en el monitor externo: una en cada costado (45% del ancho, toda la altura) y la tercera centrada detrás; un click en la franja del medio la trae al frente. Funciona en Wayland usando el scripting de KWin. El monitor y el ancho se cambian arriba del todo en el script (`OUTPUT`, `WIDTH_PCT`). |
-| **Konsole** | Perfil `bruno-verde-pc` por defecto: esquema GreenOnBlack (verde sobre negro) con la fuente Hack. |
-| **Tema** | Breeze Dark (colores e íconos). No toca el fondo de pantalla, el panel ni los escritorios virtuales. |
+| **Konsole** | Perfil y esquema `Dracula`: opacidad 0.65 con blur, fuente JetBrainsMono Nerd Font, zsh, sin barra de menú ni de pestañas. Scrollbar roja: Konsole arranca con el estilo Fusion (wrapper `~/.local/bin/konsole`), porque con Breeze la scrollbar toma el color del texto de la terminal. |
+| **Tema** | [WhiteSur](https://github.com/vinceliuice/WhiteSur-kde) (estilo macOS): colores, estilo de Plasma, íconos, cursor y decoración de ventanas (botones a la derecha). Se instala desde el repo oficial, fijado a un commit. |
+| **Tiling** | [Krohnkite](https://github.com/anametologin/krohnkite) con `Columns` como layout por defecto. `Meta+H/J/K/L` foco, `Meta+Shift+H/J/K/L` mover, `Meta+Ctrl+H/J/K/L` redimensionar, `Meta+F` flotar, `Meta+\` siguiente layout. |
+| **Panel** | Una sola barra inferior a lo ancho: menú, escritorios virtuales numerados, íconos de apps centrados, bandeja y reloj `dd/MM/yyyy`. 2 escritorios virtuales. |
+| **Atajos** | `Ctrl+Alt+←/→` escritorio anterior/siguiente, `Ctrl+Alt+L` bloquear sesión, `Meta+L` foco a la derecha de Krohnkite. |
+| **Efectos** | Magic Lamp (400 ms) en lugar de Squash al minimizar. |
+| **Fondo** | `kde/.local/share/wallpapers/wallpaper.png`. |
+| **KDE Connect** | Desactivado para ahorrar RAM. Se reactiva con `kdeconnect-activar` ([docs](docs/reactivar-kdeconnect.md)). |
+
+KDE reescribe sus propios `*rc` en runtime, por eso no van como symlinks: `scripts/kde-apply.sh` los aplica con `kwriteconfig6` y D-Bus (el panel está en `scripts/kde/panel.js`). Es idempotente y se puede volver a correr cuando quieras, por ejemplo ya dentro de Plasma si el instalador corrió sin sesión.
 
 El ícono del escritorio es una copia normal: se le puede cambiar el nombre o el ícono desde click derecho → Propiedades.
 
-### Shell (bash)
+### Shell (zsh, con bash de respaldo)
 
-- **Prompt** con [starship](https://starship.rs) (rama de git, estado, lenguaje del proyecto).
+- **zsh** con [Oh My Zsh](https://ohmyz.sh) y `zsh-syntax-highlighting` (sin autosugerencias). Paleta Dracula fija: verde comandos válidos, rosa palabras reservadas y operadores, naranja opciones, cian rutas existentes, amarillo strings, violeta variables, rojo errores.
+- **Prompt** con [starship](https://starship.rs): cápsulas pastel de colores (casa, carpeta, rama de git y estado, solo cuando hay cambios), con íconos Nerd Font.
 - **Historial** enorme, con fecha y compartido entre todas las terminales abiertas.
 - **fzf:** `Ctrl+R` busca en el historial, `Ctrl+T` elige un archivo, `Alt+C` salta a una carpeta.
 - **`.inputrc`:** autocompletado sin distinguir mayúsculas; ↑/↓ buscan en el historial lo que empezaste a escribir.
@@ -79,14 +90,6 @@ Alias y funciones más usados:
 
 Esto va en `~/.config/git/config`. Tu nombre, mail y credenciales quedan en `~/.gitconfig`, que no está en el repo: el instalador te los pregunta.
 
-### tmux
-
-Configuración y barra de estado con git, más scripts:
-
-- `tmux-session`: elegir o crear una sesión;
-- `tmux-project`: sesión editor + terminal para un repo de `~/prj/`;
-- `tmux-save` / `tmux-restore`: guardar y restaurar sesiones.
-
 ### Neovim
 
 Setup completo basado en [LazyVim](https://www.lazyvim.org). Los plugins se descargan solos la primera vez que abrís `nvim`.
@@ -102,11 +105,11 @@ Setup completo basado en [LazyVim](https://www.lazyvim.org). Los plugins se desc
 Cada carpeta es un paquete de stow que replica la estructura de `$HOME`:
 
 ```
-shell/          .bashrc, .inputrc, .vimrc, starship.toml
-tmux/           tmux.conf + script de git para la barra
+shell/          .bashrc (respaldo), .inputrc, .vimrc, starship.toml
+zsh/            .zshrc (Oh My Zsh, paleta Dracula, alias)
 neovim/         ~/.config/nvim
-kde/            setup-init, perfil de Konsole, entrada del menú
-scripts-local/  scripts de tmux y VPN en ~/.local/bin
+kde/            Konsole (perfil y esquema Dracula, wrapper Fusion), esquema rojo, fondo, setup-init
+scripts-local/  scripts de VPN y de KDE Connect en ~/.local/bin
 claude-home/    statusline y sonidos de Claude Code
 opencode/       config de opencode
 git/            delta (~/.config/git/config) y lazygit

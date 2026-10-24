@@ -152,15 +152,6 @@ serve() { # serve port? dir?
 }
 #mkdir -p && cd
 mkcd() { mkdir -p "$1" && cd "$1"; }
-# tmux shortcuts
-tmux() {
-  case "$1" in
-  new) command tmux new -s "$2" ;;
-  a) command tmux attach -t "$2" ;;
-  kill) command tmux kill-session -t "$2" ;;
-  *) command tmux "$@" ;;
-  esac
-}
 # extract
 ex() {
   for f in "$@"; do

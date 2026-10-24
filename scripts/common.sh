@@ -135,6 +135,26 @@ configure_git() {
 
 # timer functions for tracking
 TIMER_START_TIME=""
+# clone a git repo pinned to an exact commit (reproducible installs)
+# usage: clone_pinned URL DIR SHA
+clone_pinned() {
+  local url="$1" dir="$2" sha="$3"
+  if [ -d "$dir/.git" ]; then
+    log_success "$(basename "$dir") is already present"
+    return 0
+  fi
+  mkdir -p "$dir"
+  git -C "$dir" init -q
+  git -C "$dir" remote add origin "$url"
+  if git -C "$dir" fetch -q --depth 1 origin "$sha" && git -C "$dir" checkout -q FETCH_HEAD; then
+    log_success "$(basename "$dir") cloned at ${sha:0:7}"
+  else
+    rm -rf "$dir"
+    log_error "could not clone $url at $sha"
+    return 1
+  fi
+}
+
 TIMER_SCRIPT_NAME=""
 TIMER_LOG_FILE="$HOME/.dotfiles-install.log"
 
