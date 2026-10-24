@@ -1,0 +1,9 @@
+#!/bin/sh
+# Desactiva KDE Connect: sin autostart y sin activación por D-Bus.
+mkdir -p ~/.config/autostart ~/.local/share/dbus-1/services
+printf '[Desktop Entry]\nType=Application\nName=KDE Connect (desactivado)\nHidden=true\n' > ~/.config/autostart/org.kde.kdeconnect.daemon.desktop
+printf '[D-BUS Service]\nName=org.kde.kdeconnect\nExec=/bin/false\n' > ~/.local/share/dbus-1/services/org.kde.kdeconnect.service
+dbus-send --session --type=method_call --dest=org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus.ReloadConfig
+systemctl --user daemon-reload
+pkill -x kdeconnectd 2>/dev/null
+echo "KDE Connect desactivado."
